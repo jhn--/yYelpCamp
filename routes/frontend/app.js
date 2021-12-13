@@ -4,17 +4,22 @@ const _feIndex = (req, res) => {
      res.render('index.ejs')
 }
 
-const _feTESTAddCamp = async (req, res) => {
-    // test frontend function for adding a campground
-    // following class `408. Campground Model Basics`
-    const testCampground = new Campground({
-        title: 'Test Camp Ground',
-        price: '100',
-        description: 'Test Camp Ground :D',
-        location: 'Anywhere'
-    })
-    const savedCamp = await testCampground.save();
-    res.send(savedCamp);
+// const _feTESTAddCamp = async (req, res) => {
+//     // test frontend function for adding a campground
+//     // following class `408. Campground Model Basics`
+//     const testCampground = new Campground({
+//         title: 'Test Camp Ground',
+//         price: '100',
+//         description: 'Test Camp Ground :D',
+//         location: 'Anywhere'
+//     })
+//     const savedCamp = await testCampground.save();
+//     res.send(savedCamp);
+// }
+
+const _feListCamps = async (req, res) => {
+    const campGrounds = await Campground.find({ isDelete: false });
+    res.render('campgrounds.ejs', { campGrounds });
 }
 
 const _fe404 = (req, res) => {
@@ -23,7 +28,8 @@ const _fe404 = (req, res) => {
 
 const _feRoutes = {
     _feIndex: _feIndex,
-    _feTESTAddCamp: _feTESTAddCamp,
+    _feListCamps: _feListCamps,
+    // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }
 

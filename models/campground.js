@@ -13,6 +13,10 @@ const CampgroundSchema = new Schema({
     },
     location: {
         type: String
+    },
+    isDelete: {
+        type: Boolean,
+        default: false
     }
 })
 

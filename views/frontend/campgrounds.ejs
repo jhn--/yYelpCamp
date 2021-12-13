@@ -27,7 +27,14 @@
         </div>
         <div class="pusher">
             <div class="ui basic segment">
-                <h1 class="ui header">yYelpCamp</h1>
+                <h1 class="ui header">Campgrounds</h1>
+            </div>
+            <div>
+                <ul>
+                    <% for( let cg of campGrounds ) { %>
+                    <li><%= cg.title %></li>
+                    <% } %>
+                </ul>
             </div>
         </div>
     </div>
