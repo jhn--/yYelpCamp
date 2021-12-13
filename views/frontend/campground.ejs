@@ -27,13 +27,13 @@
         </div>
         <div class="pusher">
             <div class="ui basic segment">
-                <h1 class="ui header">Campgrounds</h1>
+                <h1 class="ui header"><%= campGround.title %></h1>
             </div>
             <div>
                 <ul>
-                    <% for( let cgs of campGrounds ) { %>
-                    <li><a href="/campground/<%= cgs.id %>"><%= cgs.title %></a></li>
-                    <% } %>
+                    <li>Description: <%= campGround.description %> </li>
+                    <li>Location: <%= campGround.location %> </li>
+                    <li>Price: <%= campGround.price %> </li>
                 </ul>
             </div>
         </div>

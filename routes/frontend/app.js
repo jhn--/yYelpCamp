@@ -17,9 +17,15 @@ const _feIndex = (req, res) => {
 //     res.send(savedCamp);
 // }
 
-const _feListCamps = async (req, res) => {
+const _feListCampgrounds = async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
     res.render('campgrounds.ejs', { campGrounds });
+}
+
+const _feShowCampground = async (req, res) => {
+    const { id } = req.params;
+    const campGround = await Campground.findOne({ id: id });
+    res.render('campground.ejs', { campGround });
 }
 
 const _fe404 = (req, res) => {
@@ -28,7 +34,8 @@ const _fe404 = (req, res) => {
 
 const _feRoutes = {
     _feIndex: _feIndex,
-    _feListCamps: _feListCamps,
+    _feListCampgrounds: _feListCampgrounds,
+    _feShowCampground: _feShowCampground,
     // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }

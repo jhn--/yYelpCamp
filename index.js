@@ -41,11 +41,12 @@ app.listen(_port, () => {
 // express
 
 // const { _feIndex, _feTESTAddCamp, _fe404 } = require('./routes/frontend/app');
-const { _feIndex, _feListCamps, _fe404 } = require('./routes/frontend/app');
+const { _feIndex, _feListCampgrounds, _feShowCampground, _fe404 } = require('./routes/frontend/app');
 
 // frontend
 app.get('/', _feIndex);
-app.get('/campgrounds', _feListCamps)
+app.get('/campgrounds', _feListCampgrounds)
+app.get('/campground/:id', _feShowCampground)
 // app.get('/addcampground', _feTESTAddCamp);
 
 // 404s
