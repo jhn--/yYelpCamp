@@ -1,73 +1,39 @@
-<!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
-<html>
-
-<head>
-    <%- include('../includes/head.ejs') %>
-    <%- include('includes/styles.ejs') %>
-    <title>yYelpCamp</title>
-</head>
-
-<body>
-    <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-    <!-- <div class="ui top attached demo menu">
-        <%- include('./includes/feTopNav.ejs') %>
-    </div> -->
-    <!-- <div class="ui bottom attached segment pushable"> -->
-    <div class="full height">
-        <!-- <div class="ui inverted labeled icon left inline vertical sidebar menu visible"> -->
-        <!-- <div class="ui inverted labeled icon left vertical sidebar menu"> -->
-        <section class="ui left inverted vertical menu sidebar labeled icon visible">
-            <%- include('./includes/feSideNav.ejs') %>
-        </section>
-        <section class="pusher">
-            <div class="ui basic segment">
-                <h1 class="ui header">Edit <%= campGround.title %>></h1>
-            </div>
-            <section class="ui grid">
-                <div class="ui row">
-                    <div class="ui basic segment six wide column">
-                        <form class="ui form" method="post" action="/campground/<%= campGround._id %>/edit?_m=PUT">
-                            <div class="field">
-                                <label>Title</label>
-                                <input type="text" name="campground[title]" placeholder="Title"
-                                    value="<%= campGround.title %>">
-                            </div>
-                            <div class="field">
-                                <label>Location</label>
-                                <input type="text" name="campground[location]" placeholder="City, State"
-                                    value="<%= campGround.location %>">
-                            </div>
-                            <div class="field">
-                                <label>Price</label>
-                                <input type="text" name="campground[price]" placeholder="Price"
-                                    value="<%= campGround.price %>">
-                            </div>
-                            <div class="field">
-                                <label>Description</label>
-                                <textarea name="campground[description]"
-                                    rows="2"><%= campGround.description %></textarea>
-                            </div>
-                            <button type="submit" class="ui labeled icon inverted green button">
-                                <i class="right arrow icon"></i>
-                                Submit
-                            </button>
-                            <a href="/campground/<%=campGround._id %>" class="ui labeled icon inverted red button">
-                                <i class="times circle outline icon"></i>
-                                Cancel
-                            </a>
-                        </form>
+<% layout('./layouts/boilerplate') -%>
+<section class="pusher">
+    <section class="ui basic segment">
+        <h1 class="ui header">Edit <%= campGround.title %>></h1>
+    </section>
+    <section class="ui grid">
+        <div class="ui row">
+            <div class="ui basic segment six wide column">
+                <form class="ui form" method="post" action="/campground/<%= campGround._id %>/edit?_m=PUT">
+                    <div class="field">
+                        <label>Title</label>
+                        <input type="text" name="campground[title]" placeholder="Title" value="<%= campGround.title %>">
                     </div>
-                </div>
-            </section>
-        </section>
-    </div>
-    <%- include('../includes/script_src.ejs') %>
-</body>
-
-</html>
+                    <div class="field">
+                        <label>Location</label>
+                        <input type="text" name="campground[location]" placeholder="City, State"
+                            value="<%= campGround.location %>">
+                    </div>
+                    <div class="field">
+                        <label>Price</label>
+                        <input type="text" name="campground[price]" placeholder="Price" value="<%= campGround.price %>">
+                    </div>
+                    <div class="field">
+                        <label>Description</label>
+                        <textarea name="campground[description]" rows="2"><%= campGround.description %></textarea>
+                    </div>
+                    <button type="submit" class="ui labeled icon inverted green button">
+                        <i class="right arrow icon"></i>
+                        Submit
+                    </button>
+                    <a href="/campground/<%=campGround._id %>" class="ui labeled icon inverted red button">
+                        <i class="times circle outline icon"></i>
+                        Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </section>
+</section>

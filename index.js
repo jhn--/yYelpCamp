@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 // express
 
 // mongoose
@@ -30,6 +31,7 @@ app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_m'));
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 // app.set('views', [process.cwd() + '/views/frontend', process.cwd() + '/views/backend'])
 app.set('views', path.join(__dirname, '/views/frontend'), path.join(__dirname, '/views/backend'))
