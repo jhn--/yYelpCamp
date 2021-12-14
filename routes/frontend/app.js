@@ -40,6 +40,20 @@ const _feNewCampground = async (req, res) => {
     }
 }
 
+const _feEditCampground = async (req, res) => {
+    const { id } = req.params;
+    switch (req.method) {
+        case "PUT":
+            const editCampground = req.body.campground;
+            await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+            res.redirect(`/campground/${id}`)
+            break;
+        default:
+            const campGround = await Campground.findById(id);
+            res.render('editCampground.ejs', { campGround });
+    }
+}
+
 const _fe404 = (req, res) => {
     res.status(404).render('404.ejs')
 }
@@ -49,6 +63,7 @@ const _feRoutes = {
     _feListCampgrounds: _feListCampgrounds,
     _feShowCampground: _feShowCampground,
     _feNewCampground: _feNewCampground,
+    _feEditCampground: _feEditCampground,
     // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }

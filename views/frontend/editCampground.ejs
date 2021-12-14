@@ -27,33 +27,45 @@
         </div>
         <div class="pusher">
             <div class="ui basic segment">
-                <h1 class="ui header">New Campground</h1>
+                <h1 class="ui header">Edit <%= campGround.title %>></h1>
             </div>
             <div class="ui grid">
                 <div class="ui row">
                     <div class="ui basic segment six wide column">
-                        <form class="ui form" method="post" action="/campground/new">
+                        <form class="ui form" method="post" action="/campground/<%= campGround._id %>/edit?_m=PUT">
                             <div class="field">
                                 <label>Title</label>
-                                <input type="text" name="campground[title]" placeholder="Title">
+                                <input type="text" name="campground[title]" placeholder="Title"
+                                    value="<%= campGround.title %>">
                             </div>
                             <div class="field">
                                 <label>Location</label>
-                                <input type="text" name="campground[location]" placeholder="City, State">
+                                <input type="text" name="campground[location]" placeholder="City, State"
+                                    value="<%= campGround.location %>">
                             </div>
                             <div class="field">
                                 <label>Price</label>
-                                <input type="text" name="campground[price]" placeholder="Price">
+                                <input type="text" name="campground[price]" placeholder="Price"
+                                    value="<%= campGround.price %>">
                             </div>
                             <div class="field">
                                 <label>Description</label>
-                                <textarea name="campground[description]" rows="2"></textarea>
+                                <textarea name="campground[description]"
+                                    rows="2"><%= campGround.description %></textarea>
                             </div>
                             <button type="submit" class="ui labeled icon inverted green button">
                                 <i class="right arrow icon"></i>
                                 Submit
                             </button>
+                            <a href="/campground/<%=campGround._id %>" class="ui labeled icon inverted red button">
+                                <i class="times circle outline icon"></i>
+                                Cancel
+                            </a>
+                            <!-- <a class="ui button" href="/campground/<%=campGround._id %>">Cancel</a> -->
                         </form>
+                        <!-- <form class="ui form" action="get" action="/campground/<%=campGround._id %>">
+                            <button class="ui button secondary" type="submit">Cancel</button>
+                        </form> -->
                     </div>
                 </div>
             </div>

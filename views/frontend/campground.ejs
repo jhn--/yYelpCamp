@@ -36,6 +36,15 @@
                     <li>Price: <%= campGround.price %> </li>
                 </ul>
             </div>
+            <div class="ui basic segment">
+                <a href="/campGround/<%= campGround._id %>/edit">
+                    <button class="ui labeled icon inverted orange button">
+                        <i class="pen nib icon"></i>
+                        Edit
+                    </button>
+                </a>
+                <!-- <a href="/campGround/<%= campGround._id %>/edit" class="ui button"><i class="pen nib icon">Edit</i></a> -->
+            </div>
         </div>
     </div>
     <%- include('../includes/script_src.ejs') %>
