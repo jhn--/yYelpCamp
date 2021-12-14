@@ -22,14 +22,14 @@
     <div class="full height">
         <!-- <div class="ui inverted labeled icon left inline vertical sidebar menu visible"> -->
         <!-- <div class="ui inverted labeled icon left vertical sidebar menu"> -->
-        <div class="ui left inverted vertical menu sidebar labeled icon visible">
+        <section class="ui left inverted vertical menu sidebar labeled icon visible">
             <%- include('./includes/feSideNav.ejs') %>
-        </div>
-        <div class="pusher">
+        </section>
+        <section class="pusher">
             <div class="ui basic segment">
                 <h1 class="ui header">Edit <%= campGround.title %>></h1>
             </div>
-            <div class="ui grid">
+            <section class="ui grid">
                 <div class="ui row">
                     <div class="ui basic segment six wide column">
                         <form class="ui form" method="post" action="/campground/<%= campGround._id %>/edit?_m=PUT">
@@ -61,15 +61,11 @@
                                 <i class="times circle outline icon"></i>
                                 Cancel
                             </a>
-                            <!-- <a class="ui button" href="/campground/<%=campGround._id %>">Cancel</a> -->
                         </form>
-                        <!-- <form class="ui form" action="get" action="/campground/<%=campGround._id %>">
-                            <button class="ui button secondary" type="submit">Cancel</button>
-                        </form> -->
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </section>
     </div>
     <%- include('../includes/script_src.ejs') %>
 </body>

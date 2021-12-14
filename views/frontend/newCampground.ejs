@@ -22,14 +22,14 @@
     <div class="full height">
         <!-- <div class="ui inverted labeled icon left inline vertical sidebar menu visible"> -->
         <!-- <div class="ui inverted labeled icon left vertical sidebar menu"> -->
-        <div class="ui left inverted vertical menu sidebar labeled icon visible">
+        <section class="ui left inverted vertical menu sidebar labeled icon visible">
             <%- include('./includes/feSideNav.ejs') %>
-        </div>
-        <div class="pusher">
-            <div class="ui basic segment">
+        </section>
+        <section class="pusher">
+            <section class="ui basic segment">
                 <h1 class="ui header">New Campground</h1>
-            </div>
-            <div class="ui grid">
+            </section>
+            <section class="ui grid">
                 <div class="ui row">
                     <div class="ui basic segment six wide column">
                         <form class="ui form" method="post" action="/campground/new">
@@ -56,8 +56,8 @@
                         </form>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </section>
     </div>
     <%- include('../includes/script_src.ejs') %>
 </body>

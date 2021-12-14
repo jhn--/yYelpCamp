@@ -40,6 +40,12 @@ const _feNewCampground = async (req, res) => {
     }
 }
 
+const _deleteCampground = async (req, res) => {
+    const { id } = req.params;
+    await Campground.findByIdAndUpdate(id, { isDelete: true });
+    res.redirect('/campgrounds');
+}
+
 const _feEditCampground = async (req, res) => {
     const { id } = req.params;
     switch (req.method) {
@@ -64,6 +70,7 @@ const _feRoutes = {
     _feShowCampground: _feShowCampground,
     _feNewCampground: _feNewCampground,
     _feEditCampground: _feEditCampground,
+    _deleteCampground: _deleteCampground,
     // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }
