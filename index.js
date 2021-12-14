@@ -6,6 +6,11 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 // express
 
+// morgan 
+let morgan = require('morgan');
+app.use(morgan('dev'));
+// morgan 
+
 // mongoose
 const mongoose = require('mongoose');
 const Campground = require('./models/campground')
