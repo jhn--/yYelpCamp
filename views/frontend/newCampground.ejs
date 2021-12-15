@@ -1,34 +1,32 @@
 <% layout('./layouts/boilerplate') -%>
-<section class="pusher">
-    <section class="ui basic segment">
-        <h1 class="ui header">New Campground</h1>
-    </section>
-    <section class="ui grid">
-        <div class="ui row">
-            <div class="ui basic segment six wide column">
-                <form class="ui form" method="post" action="/campground/new">
-                    <div class="field">
-                        <label>Title</label>
-                        <input type="text" name="campground[title]" placeholder="Title">
-                    </div>
-                    <div class="field">
-                        <label>Location</label>
-                        <input type="text" name="campground[location]" placeholder="City, State">
-                    </div>
-                    <div class="field">
-                        <label>Price</label>
-                        <input type="text" name="campground[price]" placeholder="Price">
-                    </div>
-                    <div class="field">
-                        <label>Description</label>
-                        <textarea name="campground[description]" rows="2"></textarea>
-                    </div>
-                    <button type="submit" class="ui labeled icon inverted green button">
-                        <i class="right arrow icon"></i>
-                        Submit
-                    </button>
-                </form>
-            </div>
+<section class="ui basic segment">
+    <h1 class="ui header">New Campground</h1>
+</section>
+<section class="ui grid basic segment">
+    <div class="ui row">
+        <div class="ui basic segment six wide column">
+            <form class="ui form" method="post" action="/campground/new">
+                <div class="field">
+                    <label>Title</label>
+                    <input type="text" name="campground[title]" placeholder="Title">
+                </div>
+                <div class="field">
+                    <label>Location</label>
+                    <input type="text" name="campground[location]" placeholder="City, State">
+                </div>
+                <div class="field">
+                    <label>Price</label>
+                    <input type="text" name="campground[price]" placeholder="Price">
+                </div>
+                <div class="field">
+                    <label>Description</label>
+                    <textarea name="campground[description]" rows="2"></textarea>
+                </div>
+                <button type="submit" class="ui labeled icon inverted green button">
+                    <i class="right arrow icon"></i>
+                    Submit
+                </button>
+            </form>
         </div>
-    </section>
+    </div>
 </section>

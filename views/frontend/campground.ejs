@@ -1,31 +1,29 @@
 <% layout('./layouts/boilerplate') -%>
-<section class="pusher">
-    <section class="ui basic segment">
-        <h1 class="ui header"><%= campGround.title %></h1>
-    </section>
-    <section class="ui basic segment">
-        <ul>
-            <li>Description: <%= campGround.description %> </li>
-            <li>Location: <%= campGround.location %> </li>
-            <li>Price: <%= campGround.price %> </li>
-        </ul>
-    </section>
-    <section class="ui basic segment grid">
-        <div class="two column">
-            <form method="get" action="/campGround/<%= campGround._id %>/edit">
-                <button class="ui labeled icon inverted orange button">
-                    <i class="pen nib icon"></i>
-                    Edit
-                </button>
-            </form>
-        </div>
-        <div class="two column">
-            <form method="post" action="/campGround/<%= campGround._id %>/?_m=DELETE">
-                <button class=" ui labeled icon inverted red button">
-                    <i class="trash icon"></i>
-                    Delete
-                </button>
-            </form>
-        </div>
-    </section>
+<section class="ui basic segment">
+    <h1 class="ui header"><%= campGround.title %></h1>
+</section>
+<section class="ui grid basic segment">
+    <ul>
+        <li>Description: <%= campGround.description %> </li>
+        <li>Location: <%= campGround.location %> </li>
+        <li>Price: <%= campGround.price %> </li>
+    </ul>
+</section>
+<section class="ui basic segment grid">
+    <div class="two wide column">
+        <form method="get" action="/campGround/<%= campGround._id %>/edit">
+            <button class="ui labeled icon inverted orange button">
+                <i class="pen nib icon"></i>
+                Edit
+            </button>
+        </form>
+    </div>
+    <div class="two wide column">
+        <form method="post" action="/campGround/<%= campGround._id %>/?_m=DELETE">
+            <button class=" ui labeled icon inverted red button">
+                <i class="trash icon"></i>
+                Delete
+            </button>
+        </form>
+    </div>
 </section>

@@ -1,18 +1,11 @@
 <% layout('./layouts/boilerplate') -%>
-<section class="full height">
-    <section class="ui left inverted vertical menu sidebar labeled icon visible">
-        <%- include('./includes/feSideNav.ejs') %>
-    </section>
-    <section class="pusher">
-        <section class="ui basic segment">
-            <h1 class="ui header">Campgrounds</h1>
-        </section>
-        <section class="ui basic segment">
-            <ul>
-                <% for( let cgs of campGrounds ) { %>
-                <li><a href="/campground/<%= cgs.id %>"><%= cgs.title %></a></li>
-                <% } %>
-            </ul>
-        </section>
-    </section>
+<section class="ui basic segment">
+    <h1 class="ui header">Campgrounds</h1>
+</section>
+<section class="ui grid basic segment">
+    <ul>
+        <% for( let cgs of campGrounds ) { %>
+        <li><a href="/campground/<%= cgs.id %>"><%= cgs.title %></a></li>
+        <% } %>
+    </ul>
 </section>
