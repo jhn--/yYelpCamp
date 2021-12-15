@@ -15,15 +15,16 @@
     <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-    <section class="full height">
-        <div class="ui vertical inverted menu left fixed sidebar labeled visible">
-            <%- include('../includes/feSideNav.ejs') %>
-        </div>
-        <section class="pusher main ui container">
-            <%- body -%>
-        </section>
-        <%- include('../../includes/script_src.ejs') %>
+    <section class="ui fixed inverted label menu">
+        <%- include('../includes/feTopNav.ejs') %>
     </section>
+    <section class="main ui container">
+        <%-body -%>
+    </section>
+    <footer class="ui inverted vertical footer segment">
+        <%- include("../includes/feFooter.ejs") %>
+    </footer>
+    <%- include('../../includes/script_src.ejs') %>
 </body>
 
 </html>

@@ -1,6 +1,6 @@
 <% layout('./layouts/boilerplate') -%>
 <section class="ui basic segment">
-    <h1 class="ui header">Edit <%= campGround.title %>></h1>
+    <h1 class="ui header">Edit <%= campGround.title %></h1>
 </section>
 <section class="ui grid basic segment">
     <div class="ui row">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="field">
                     <label>Description</label>
-                    <textarea name="campground[description]" rows="2"><%= campGround.description %></textarea>
+                    <textarea name="campground[description]" rows=10"><%= campGround.description %></textarea>
                 </div>
                 <button type="submit" class="ui labeled icon inverted green button">
                     <i class="right arrow icon"></i>

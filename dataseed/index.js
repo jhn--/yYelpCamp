@@ -73,9 +73,10 @@ const populateCampground = async () => {
             }
         });
         const randCamp = new Campground({
-            title:`${randPicker(descriptors)} ${randPicker(places)} `,
+            title: `${randPicker(descriptors)} ${randPicker(places)} `,
+            image: 'https://source.unsplash.com/collection/483251',
             price: Math.floor(Math.random()*100),
-            description: randDescription.generateSentences(1),
+            description: randDescription.generateSentences(5),
             location: `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`
         })
         await randCamp.save();
