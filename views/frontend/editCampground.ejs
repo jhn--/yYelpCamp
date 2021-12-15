@@ -2,6 +2,7 @@
 <section class="ui basic segment">
     <h1 class="ui header">Edit <%= campGround.title %></h1>
 </section>
+<div class="ui divider"></div>
 <section class="ui grid basic segment">
     <div class="ui row">
         <div class="ui basic segment six wide column">
@@ -16,8 +17,16 @@
                         value="<%= campGround.location %>">
                 </div>
                 <div class="field">
+                    <label>Image URL</label>
+                    <input type="text" name="campground[image]" placeholder="Image URL" value="<%= campGround.image %>">
+                </div>
+                <div class="field">
                     <label>Price</label>
-                    <input type="text" name="campground[price]" placeholder="Price" value="<%= campGround.price %>">
+                    <div class="ui right labeled fluid input">
+                        <label for="campground[price]" class="ui label">UST</label>
+                        <input type="text" name="campground[price]" value="<%= campGround.price %>">
+                        <div class="ui basic label">.00</div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Description</label>

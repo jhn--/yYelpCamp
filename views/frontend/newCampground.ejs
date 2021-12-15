@@ -2,9 +2,10 @@
 <section class="ui basic segment">
     <h1 class="ui header">New Campground</h1>
 </section>
+<div class="ui divider"></div>
 <section class="ui grid basic segment">
     <div class="ui row">
-        <div class="ui basic segment six wide column">
+        <div class="ui basic segment eight wide column">
             <form class="ui form" method="post" action="/campground/new">
                 <div class="field">
                     <label>Title</label>
@@ -15,8 +16,16 @@
                     <input type="text" name="campground[location]" placeholder="City, State">
                 </div>
                 <div class="field">
+                    <label>Image URL</label>
+                    <input type="text" name="campground[image]" placeholder="Image URL">
+                </div>
+                <div class="field">
                     <label>Price</label>
-                    <input type="text" name="campground[price]" placeholder="Price">
+                    <div class="ui right labeled fluid input">
+                        <label for="campground[price]" class="ui label">UST</label>
+                        <input type="text" name="campground[price]" placeholder="0">
+                        <div class="ui basic label">.00</div>
+                    </div>
                 </div>
                 <div class="field">
                     <label>Description</label>
