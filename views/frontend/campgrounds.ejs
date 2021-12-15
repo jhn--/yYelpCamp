@@ -2,10 +2,33 @@
 <section class="ui basic segment">
     <h1 class="ui header">Campgrounds</h1>
 </section>
-<section class="ui grid basic segment">
-    <ul>
+<section class="ui basic segment">
+    <!-- <ul>
         <% for( let cgs of campGrounds ) { %>
         <li><a href="/campground/<%= cgs.id %>"><%= cgs.title %></a></li>
         <% } %>
-    </ul>
+    </ul> -->
+    <div class="ui four stackable cards">
+        <% for( let cgs of campGrounds ) { %>
+        <div class="ui card">
+            <a class="image" href="/campground/<%= cgs._id %>">
+                <img src="<%= cgs.image %>>">
+            </a>
+            <div class="content">
+                <a class="header" href="/campground/<%= cgs._id %>">
+                    <%= cgs.title %>
+                </a>
+                <div class="meta">
+                    <span><%= cgs.location %></span>
+                </div>
+                <div class="description">
+                    <%= cgs.description %>
+                </div>
+            </div>
+            <div class="extra content">
+                <span>$<%= cgs.price %> per night</span>
+            </div>
+        </div>
+        <% } %>
+    </div>
 </section>
