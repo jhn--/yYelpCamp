@@ -5,36 +5,36 @@
 <div class="ui divider"></div>
 <section class="ui grid basic segment">
     <div class="ui row">
-        <div class="ui basic segment eight wide column">
+        <div class="ui basic segment ten wide column">
             <form class="ui form" method="post" action="/campground/new">
-                <div class="field">
+                <div class="required field">
                     <label>Title</label>
                     <input type="text" name="campground[title]" placeholder="Title">
                 </div>
-                <div class="field">
+                <div class="required field">
                     <label>Location</label>
                     <input type="text" name="campground[location]" placeholder="City, State">
                 </div>
-                <div class="field">
+                <div class="required field">
                     <label>Image URL</label>
                     <input type="text" name="campground[image]" placeholder="Image URL">
                 </div>
-                <div class="field">
+                <div class="required field">
                     <label>Price</label>
                     <div class="ui right labeled fluid input">
                         <label for="campground[price]" class="ui label">UST</label>
                         <input type="text" name="campground[price]" placeholder="0">
-                        <div class="ui basic label">.00</div>
                     </div>
                 </div>
-                <div class="field">
+                <div class="required field">
                     <label>Description</label>
                     <textarea name="campground[description]" rows="10"></textarea>
                 </div>
-                <button type="submit" class="ui labeled icon inverted green button">
+                <button type="submit" class="ui submit labeled icon inverted green button">
                     <i class="right arrow icon"></i>
                     Submit
                 </button>
+                <div class="ui error message"></div>
             </form>
         </div>
     </div>
