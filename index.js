@@ -22,7 +22,7 @@ const _mongoose_opts = {
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   family: 4 // Use IPv4, skip trying IPv6
 };
-mongoose.connect(`mongodb://localhost:27017/${db_name}`)
+mongoose.connect(`mongodb://localhost:27017/${db_name}`, _mongoose_opts)
     .then(() => {
     console.log(`${db_name} connected`)
     })
@@ -62,10 +62,12 @@ app.put('/campground/:id/edit', _feEditCampground)
 // app.get('/addcampground', _feTESTAddCamp);
 
 // 404s
-app.get('*', _fe404);
+app.all('*', _fe404);
 
 app.use((err, req, res, next) => {
   // console.log(`Caught error @ ${req.method}:${req.url} `)
-  const msg = `Caught error @ ${req.method}:${req.url} `
-  res.status(500).send(msg);
+  // const msg = `Caught error @ ${req.method}:${req.url} `
+  // res.send(msg);
+  const { statusCode = 500, msg = "Something went wrong." } = err;
+  res.status(statusCode).send(msg);
 })
