@@ -66,7 +66,6 @@ app.all('*', _fe404);
 app.use((err, req, res, next) => {
   // const { statusCode = 500, msg = "Something went wrong." } = err;
   const { statusCode = 500 } = err;
-  console.log(err);
   if (!err.message) {
     err.message = "Something went wrong."
   }

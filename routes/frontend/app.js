@@ -1,6 +1,7 @@
 const Campground = require('../../models/campground');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
+const Joi = require("joi");
 
 const _feIndex = catchAsync((req, res) => {
      res.render('index.ejs')
@@ -33,8 +34,23 @@ const _feShowCampground = catchAsync(async (req, res) => {
 const _feNewCampground = catchAsync(async (req, res) => {
     switch (req.method) {
         case "POST":
-            if (!req.body.campground) {
-                throw new ExpressError(400, "Invalid Campground data.");
+            // if (!req.body.campground) {
+            //     throw new ExpressError(400, "Invalid Campground data.");
+            // }
+            const campgroundSchema = Joi.object({
+                campground: Joi.object({
+                    title: Joi.string().required(),
+                    location: Joi.string().required(),
+                    image: Joi.string().required(),
+                    price: Joi.number().required().min(1),
+                    description: Joi.string().required()
+                }).required()
+            })
+            // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
+            const { error } = campgroundSchema.validate(req.body);
+            if (error) {
+                const msg = error.details.map(element => element["message"]).join(',');
+                throw new ExpressError(400, msg)
             }
             const newCampground = new Campground(req.body.campground);
             await newCampground.save();
