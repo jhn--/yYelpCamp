@@ -1,8 +1,9 @@
-const Campground = require('../../models/campground')
+const Campground = require('../../models/campground');
+const catchAsync = require('../utils/catchAsync');
 
-const _feIndex = (req, res) => {
+const _feIndex = catchAsync((req, res) => {
      res.render('index.ejs')
-}
+})
 
 // const _feTESTAddCamp = async (req, res) => {
 //     // test frontend function for adding a campground
@@ -17,40 +18,36 @@ const _feIndex = (req, res) => {
 //     res.send(savedCamp);
 // }
 
-const _feListCampgrounds = async (req, res) => {
+const _feListCampgrounds = catchAsync(async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
     res.render('campgrounds.ejs', { campGrounds });
-}
+})
 
-const _feShowCampground = async (req, res) => {
+const _feShowCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
     const campGround = await Campground.findById(id);
     res.render('campground.ejs', { campGround });
-}
+})
 
-const _feNewCampground = async (req, res, next) => {
+const _feNewCampground = catchAsync(async (req, res, next) => {
     switch (req.method) {
         case "POST":
-            try {
-                const newCampground = new Campground(req.body.campground);
-                await newCampground.save();
-                res.redirect(`/campground/${newCampground._id}`);
-            } catch (e) {
-                next(e);
-            }
+            const newCampground = new Campground(req.body.campground);
+            await newCampground.save();
+            res.redirect(`/campground/${newCampground._id}`);
             break;
         default:
             res.render('newCampground.ejs');
     }
-}
+})
 
-const _deleteCampground = async (req, res) => {
+const _deleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndUpdate(id, { isDelete: true });
     res.redirect('/campgrounds');
-}
+})
 
-const _feEditCampground = async (req, res) => {
+const _feEditCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
     switch (req.method) {
         case "PUT":
@@ -62,11 +59,11 @@ const _feEditCampground = async (req, res) => {
             const campGround = await Campground.findById(id);
             res.render('editCampground.ejs', { campGround });
     }
-}
+})
 
-const _fe404 = (req, res) => {
+const _fe404 = catchAsync((req, res) => {
     res.status(404).render('404.ejs')
-}
+})
 
 const _feRoutes = {
     _feIndex: _feIndex,

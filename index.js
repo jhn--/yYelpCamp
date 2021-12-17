@@ -65,5 +65,7 @@ app.put('/campground/:id/edit', _feEditCampground)
 app.get('*', _fe404);
 
 app.use((err, req, res, next) => {
-  res.status(500).send('Something went wrong.');
+  // console.log(`Caught error @ ${req.method}:${req.url} `)
+  const msg = `Caught error @ ${req.method}:${req.url} `
+  res.status(500).send(msg);
 })
