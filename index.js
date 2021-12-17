@@ -59,15 +59,16 @@ app.get('/campground/:id', _feShowCampground)
 app.delete('/campground/:id', _deleteCampground)
 app.get('/campground/:id/edit', _feEditCampground)
 app.put('/campground/:id/edit', _feEditCampground)
-// app.get('/addcampground', _feTESTAddCamp);
 
 // 404s
 app.all('*', _fe404);
 
 app.use((err, req, res, next) => {
-  // console.log(`Caught error @ ${req.method}:${req.url} `)
-  // const msg = `Caught error @ ${req.method}:${req.url} `
-  // res.send(msg);
-  const { statusCode = 500, msg = "Something went wrong." } = err;
-  res.status(statusCode).send(msg);
+  // const { statusCode = 500, msg = "Something went wrong." } = err;
+  const { statusCode = 500 } = err;
+  console.log(err);
+  if (!err.message) {
+    err.message = "Something went wrong."
+  }
+  res.status(statusCode).render('error.ejs', {err});
 })

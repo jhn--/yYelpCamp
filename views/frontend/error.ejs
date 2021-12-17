@@ -1,0 +1,10 @@
+<% layout('./layouts/boilerplate') -%>
+<section class="ui basic segment">
+    <h1 class="ui header"><%= err.message %></h1>
+</section>
+<div class="ui divider"></div>
+<section class="ui grid basic segment">
+    <div class="ui error message">
+        <%= err.stack %>
+    </div>
+</section>

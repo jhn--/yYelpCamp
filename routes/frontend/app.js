@@ -36,7 +36,6 @@ const _feNewCampground = catchAsync(async (req, res) => {
             if (!req.body.campground) {
                 throw new ExpressError(400, "Invalid Campground data.");
             }
-            console.log(req.body.campground)
             const newCampground = new Campground(req.body.campground);
             await newCampground.save();
             res.redirect(`/campground/${newCampground._id}`);
@@ -68,7 +67,7 @@ const _feEditCampground = catchAsync(async (req, res) => {
 
 const _fe404 = (req, res, next) => {
     // res.status(404).render('404.ejs')
-    next(new ExpressError(404, 'Page not found.'))
+    next(new ExpressError(404, `Page not found.`))
 }
 
 const _feRoutes = {
