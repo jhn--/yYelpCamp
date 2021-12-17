@@ -28,12 +28,16 @@ const _feShowCampground = async (req, res) => {
     res.render('campground.ejs', { campGround });
 }
 
-const _feNewCampground = async (req, res) => {
+const _feNewCampground = async (req, res, next) => {
     switch (req.method) {
         case "POST":
-            const newCampground = new Campground(req.body.campground);
-            await newCampground.save();
-            res.redirect(`/campground/${newCampground._id}`);
+            try {
+                const newCampground = new Campground(req.body.campground);
+                await newCampground.save();
+                res.redirect(`/campground/${newCampground._id}`);
+            } catch (e) {
+                next(e);
+            }
             break;
         default:
             res.render('newCampground.ejs');

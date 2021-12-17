@@ -63,3 +63,7 @@ app.put('/campground/:id/edit', _feEditCampground)
 
 // 404s
 app.get('*', _fe404);
+
+app.use((err, req, res, next) => {
+  res.status(500).send('Something went wrong.');
+})
