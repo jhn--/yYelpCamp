@@ -3,7 +3,7 @@ $('.ui.form')
         fields: {
             "campground[title]": 'empty',
             "campground[location]": 'empty',
-            "c": 'empty',
+            "campground[image]": 'empty',
             "campground[price]": {
                 identifier  : 'campground[price]',
                 rules: [
