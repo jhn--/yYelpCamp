@@ -29,7 +29,7 @@ const _feShowCampground = catchAsync(async (req, res) => {
     res.render('campground.ejs', { campGround });
 })
 
-const _feNewCampground = catchAsync(async (req, res, next) => {
+const _feNewCampground = catchAsync(async (req, res) => {
     switch (req.method) {
         case "POST":
             const newCampground = new Campground(req.body.campground);
