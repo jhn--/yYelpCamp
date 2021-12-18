@@ -4,6 +4,7 @@ const app = express();
 const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
+const ExpressError = require('./routes/utils/expressError');
 // express
 
 // morgan 
@@ -11,9 +12,13 @@ let morgan = require('morgan');
 app.use(morgan('dev'));
 // morgan 
 
+// joi
+const campgroundSchema = require('./joiSchemas/joi_campground');
+// joi
+
+
 // mongoose
 const mongoose = require('mongoose');
-const Campground = require('./models/campground')
 const db_name = 'dev_yelpcamp'
 const _mongoose_opts = {
 //   autoIndex: false, // Don't build indexes
@@ -31,7 +36,6 @@ mongoose.connect(`mongodb://localhost:27017/${db_name}`, _mongoose_opts)
     })
 // mongoose
 
-// express
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -40,6 +44,17 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 // app.set('views', [process.cwd() + '/views/frontend', process.cwd() + '/views/backend'])
 app.set('views', path.join(__dirname, '/views/frontend'), path.join(__dirname, '/views/backend'))
+
+const validateCampground = (req, res, next) => {
+  // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
+  const { error } = campgroundSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(element => element["message"]).join(',');
+    throw new ExpressError(400, msg)
+  } else {
+    next()
+  }
+}
 
 const _port = 8888;
 app.listen(_port, () => {
@@ -54,11 +69,11 @@ const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEd
 app.get('/', _feIndex);
 app.get('/campgrounds', _feListCampgrounds)
 app.get('/campground/new', _feNewCampground)
-app.post('/campground/new', _feNewCampground)
+app.post('/campground/new', validateCampground, _feNewCampground)
 app.get('/campground/:id', _feShowCampground)
 app.delete('/campground/:id', _deleteCampground)
 app.get('/campground/:id/edit', _feEditCampground)
-app.put('/campground/:id/edit', _feEditCampground)
+app.put('/campground/:id/edit', validateCampground, _feEditCampground)
 
 // 404s
 app.all('*', _fe404);

@@ -1,24 +1,10 @@
 const Campground = require('../../models/campground');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
-const Joi = require("joi");
 
-const _feIndex = catchAsync((req, res) => {
+const _feIndex = (req, res) => {
      res.render('index.ejs')
-})
-
-// const _feTESTAddCamp = async (req, res) => {
-//     // test frontend function for adding a campground
-//     // following class `408. Campground Model Basics`
-//     const testCampground = new Campground({
-//         title: 'Test Camp Ground',
-//         price: '100',
-//         description: 'Test Camp Ground :D',
-//         location: 'Anywhere'
-//     })
-//     const savedCamp = await testCampground.save();
-//     res.send(savedCamp);
-// }
+}
 
 const _feListCampgrounds = catchAsync(async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
@@ -37,21 +23,6 @@ const _feNewCampground = catchAsync(async (req, res) => {
             // if (!req.body.campground) {
             //     throw new ExpressError(400, "Invalid Campground data.");
             // }
-            const campgroundSchema = Joi.object({
-                campground: Joi.object({
-                    title: Joi.string().required(),
-                    location: Joi.string().required(),
-                    image: Joi.string().required(),
-                    price: Joi.number().required().min(1),
-                    description: Joi.string().required()
-                }).required()
-            })
-            // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
-            const { error } = campgroundSchema.validate(req.body);
-            if (error) {
-                const msg = error.details.map(element => element["message"]).join(',');
-                throw new ExpressError(400, msg)
-            }
             const newCampground = new Campground(req.body.campground);
             await newCampground.save();
             res.redirect(`/campground/${newCampground._id}`);
