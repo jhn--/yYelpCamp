@@ -20,3 +20,20 @@ $('.ui.form')
             "campground[description]": 'empty'
         }
     });
+
+
+$('.ui.form')
+    .form({
+        fields: {
+            "review[rating]": 'empty',
+            "review[body]": 'empty',
+        }
+    });
+
+// $('.ui.slider')
+//   .slider({
+//     min: 1,
+//     max: 5,
+//     start: 3,
+//     step: 1
+//   });

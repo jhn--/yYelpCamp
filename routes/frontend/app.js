@@ -1,4 +1,5 @@
 const Campground = require('../../models/campground');
+const Review = require('../../models/review');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
 
@@ -13,7 +14,7 @@ const _feListCampgrounds = catchAsync(async (req, res) => {
 
 const _feShowCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campGround = await Campground.findById(id);
+    const campGround = await Campground.findById(id).populate('reviews');
     res.render('campground.ejs', { campGround });
 })
 
@@ -52,6 +53,23 @@ const _feEditCampground = catchAsync(async (req, res) => {
     }
 })
 
+const _feNewReview = catchAsync(async (req, res) => {
+    const { id } = req.params;
+    switch (req.method) {
+        case "POST":
+            // console.log(req.body.review);
+            const campGround = await Campground.findById(id); // find campground by id
+            // console.log(campGround)
+            const { rating, body } = req.body.review; // declare a review & populate w req.body.review
+            const newReview = new Review({ rating, body }); // before push
+            campGround.reviews.push(newReview);
+            await campGround.save();
+            await newReview.save();
+            res.redirect(`/campground/${id}`)
+            break;
+    }
+})
+
 const _fe404 = (req, res, next) => {
     // res.status(404).render('404.ejs')
     next(new ExpressError(404, `Page not found.`))
@@ -64,6 +82,7 @@ const _feRoutes = {
     _feNewCampground: _feNewCampground,
     _feEditCampground: _feEditCampground,
     _deleteCampground: _deleteCampground,
+    _feNewReview: _feNewReview,
     // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }

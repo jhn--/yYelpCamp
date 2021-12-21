@@ -14,6 +14,7 @@ app.use(morgan('dev'));
 
 // joi
 const campgroundSchema = require('./joiSchemas/joi_campground');
+const reviewSchema = require('./joiSchemas/joi_review');
 // joi
 
 
@@ -56,6 +57,16 @@ const validateCampground = (req, res, next) => {
   }
 }
 
+const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(element => element["message"]).join(',');
+    throw new ExpressError(400, msg)
+  } else {
+    next()
+  }
+}
+
 const _port = 8888;
 app.listen(_port, () => {
     console.log(`yYelpCamp, listening on ${_port}`);
@@ -63,13 +74,14 @@ app.listen(_port, () => {
 // express
 
 // const { _feIndex, _feTESTAddCamp, _fe404 } = require('./routes/frontend/app');
-const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEditCampground, _deleteCampground, _fe404 } = require('./routes/frontend/app');
+const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEditCampground, _deleteCampground, _feNewReview, _fe404 } = require('./routes/frontend/app');
 
 // frontend
 app.get('/', _feIndex);
 app.get('/campgrounds', _feListCampgrounds)
 app.get('/campground/new', _feNewCampground)
 app.post('/campground/new', validateCampground, _feNewCampground)
+app.post('/campground/:id/review', validateReview, _feNewReview)
 app.get('/campground/:id', _feShowCampground)
 app.delete('/campground/:id', _deleteCampground)
 app.get('/campground/:id/edit', _feEditCampground)

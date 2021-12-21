@@ -20,7 +20,13 @@ const CampgroundSchema = new Schema({
     isDelete: {
         type: Boolean,
         default: false
-    }
+    },
+    reviews: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Review'
+        }
+    ]
 })
 
 module.exports = mongoose.model('Campground', CampgroundSchema);

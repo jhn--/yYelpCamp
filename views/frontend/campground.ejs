@@ -7,6 +7,27 @@
 <section class="ui very relaxed grid basic segment">
     <div class="eleven wide column">
         <img class="ui fluid image" src="<%= campGround.image %>" alt="">
+        <div class="ui divider"></div>
+        <div class="row campground_details_row">
+            <h3>Reviews</h3>
+            <% campGround['reviews'].forEach(review => { %>
+            <div class="ui segment">
+                <div class="ui two column very relaxed grid ">
+                    <div class="column">
+                        <% for( let index = 0; index < review.rating; index++ ) { %>
+                        <i class="star outline icon"></i>
+                        <% } %>
+                    </div>
+                    <div class="column">
+                        <%=review.body%>
+                    </div>
+                </div>
+                <div class="ui vertical divider">
+                    -
+                </div>
+            </div>
+            <% }) %>
+        </div>
     </div>
     <div class="five wide column">
         <div class="row campground_details_row">
@@ -30,6 +51,28 @@
                     <i class="trash icon"></i>
                     Delete
                 </button>
+            </form>
+        </div>
+        <div class="ui divider"></div>
+        <!-- <div class="row campground_details_row"> -->
+        <div class="ui basic segment">
+            <h4>Review</h4>
+            <form class="ui form review" method="post" action="/campground/<%=campGround._id%>/review">
+                <!-- <div class="ui labeled ticked slider" name="rating" value=>
+                </div> -->
+                <div class="required field">
+                    <label>Price</label>
+                    <input type="range" min="1" max="5" value="3" name="review[rating]">
+                </div>
+                <div class="required field">
+                    <label>Description</label>
+                    <textarea name="review[body]" rows="5"></textarea>
+                </div>
+                <button class="circular ui icon button">
+                    <i class="icon pencil alternate"></i>
+                    Submit
+                </button>
+                <div class="ui error message"></div>
             </form>
         </div>
     </div>
