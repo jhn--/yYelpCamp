@@ -74,7 +74,7 @@ app.listen(_port, () => {
 // express
 
 // const { _feIndex, _feTESTAddCamp, _fe404 } = require('./routes/frontend/app');
-const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEditCampground, _deleteCampground, _feNewReview, _fe404 } = require('./routes/frontend/app');
+const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEditCampground, _deleteCampground, _feNewReview, _fedeleteReview, _fe404 } = require('./routes/frontend/app');
 
 // frontend
 app.get('/', _feIndex);
@@ -82,6 +82,7 @@ app.get('/campgrounds', _feListCampgrounds)
 app.get('/campground/new', _feNewCampground)
 app.post('/campground/new', validateCampground, _feNewCampground)
 app.post('/campground/:id/review', validateReview, _feNewReview)
+app.delete('/campground/:campId/review/:reviewId', _fedeleteReview)
 app.get('/campground/:id', _feShowCampground)
 app.delete('/campground/:id', _deleteCampground)
 app.get('/campground/:id/edit', _feEditCampground)

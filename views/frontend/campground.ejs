@@ -11,21 +11,28 @@
         <div class="row campground_details_row">
             <h3>Reviews</h3>
             <% campGround['reviews'].forEach(review => { %>
-            <div class="ui segment">
-                <div class="ui two column very relaxed grid ">
+            <% if (!review.isDelete) { %>
+            <div class="ui">
+                <div class="ui three column very relaxed grid ">
                     <div class="column">
                         <% for( let index = 0; index < review.rating; index++ ) { %>
-                        <i class="star outline icon"></i>
+                        <i class="star outline yellow icon"></i>
                         <% } %>
                     </div>
                     <div class="column">
                         <%=review.body%>
                     </div>
-                </div>
-                <div class="ui vertical divider">
-                    -
+                    <div class="column">
+                        <form action="/campground/<%=campGround._id%>/review/<%=review._id%>?_m=DELETE" method="post">
+                            <button class="ui icon red button">
+                                <i class="trash icon"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
+            <div class="ui divider"></div>
+            <% } %>
             <% }) %>
         </div>
     </div>

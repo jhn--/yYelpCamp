@@ -70,6 +70,19 @@ const _feNewReview = catchAsync(async (req, res) => {
     }
 })
 
+const _fedeleteReview = async (req, res) => {
+    const { campId, reviewId } = req.params;
+    switch (req.method) {
+        case "DELETE":
+            // not deleting, just updating the isDelete to true in Review,
+            // therefore, i do not need to delete review from CampGround.
+            // deviates from the class 470. Deleting Reviews.
+            await Review.findByIdAndUpdate(reviewId, { isDelete: true });
+            res.redirect(`/campground/${campId}`);
+            break;
+    }
+}
+
 const _fe404 = (req, res, next) => {
     // res.status(404).render('404.ejs')
     next(new ExpressError(404, `Page not found.`))
@@ -83,6 +96,7 @@ const _feRoutes = {
     _feEditCampground: _feEditCampground,
     _deleteCampground: _deleteCampground,
     _feNewReview: _feNewReview,
+    _fedeleteReview: _fedeleteReview,
     // _feTESTAddCamp: _feTESTAddCamp,
     _fe404:_fe404
 }
