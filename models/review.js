@@ -4,7 +4,10 @@ const Schema = mongoose.Schema;
 const ReviewSchema = new Schema({
     body: String,
     rating: Number,
-    isDelete: Boolean
+    isDelete: {
+        type: Boolean,
+        default: false
+    },
 })
 
 module.exports = mongoose.model('Review', ReviewSchema);
