@@ -47,7 +47,7 @@ const _feNewCampground = catchAsync(async (req, res) => {
 
 const _deleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndUpdate(id, { isDelete: true });
+    await Campground.findByIdAndUpdate(id, { isDelete: true }, {new: true});
     res.redirect('/campgrounds');
 })
 
