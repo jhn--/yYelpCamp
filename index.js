@@ -5,6 +5,7 @@ const path = require('path');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const ExpressError = require('./routes/utils/expressError');
+const session = require('express-session');
 // express
 
 // morgan 
@@ -39,6 +40,18 @@ app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 // app.set('views', [process.cwd() + '/views/frontend', process.cwd() + '/views/backend'])
 app.set('views', path.join(__dirname, '/views/frontend'), path.join(__dirname, '/views/backend'))
+const sessionConfig = {
+  secret: 'thisshouldnotbeherelmao',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 604800000, // 1 week = 604800000 milliseconds
+    maxAge: 604800000,
+    httpOnly: true
+  }
+}
+app.use(session(sessionConfig));
+
 
 const _port = 8888;
 app.listen(_port, () => {
