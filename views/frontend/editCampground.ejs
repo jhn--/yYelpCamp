@@ -6,7 +6,7 @@
 <section class="ui grid basic segment">
     <div class="ui row">
         <div class="ui basic segment ten wide column">
-            <form class="ui form" method="post" action="/campground/<%= campGround._id %>/edit?_m=PUT">
+            <form class="ui form" method="post" action="/campgrounds/<%= campGround._id %>/edit?_m=PUT">
                 <div class="required field">
                     <label>Title</label>
                     <input type="text" name="campground[title]" placeholder="Title" value="<%= campGround.title %>">
@@ -35,7 +35,7 @@
                     <i class="right arrow icon"></i>
                     Submit
                 </button>
-                <a href="/campground/<%=campGround._id %>" class="ui labeled icon inverted red button">
+                <a href="/campgrounds/<%=campGround._id %>" class="ui labeled icon inverted red button">
                     <i class="times circle outline icon"></i>
                     Cancel
                 </a>

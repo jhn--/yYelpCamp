@@ -23,7 +23,7 @@
                         <%=review.body%>
                     </div>
                     <div class="column">
-                        <form action="/campground/<%=campGround._id%>/review/<%=review._id%>?_m=DELETE" method="post">
+                        <form action="/campgrounds/<%=campGround._id%>/reviews/<%=review._id%>?_m=DELETE" method="post">
                             <button class="ui icon red button">
                                 <i class="trash icon"></i>
                             </button>
@@ -46,14 +46,14 @@
         </div>
         <div class="ui divider"></div>
         <div class="row ui buttons campground_details_row">
-            <form method="get" action="/campGround/<%= campGround._id %>/edit">
+            <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
                 <button class="ui labeled icon orange button">
                     <i class="pen nib icon"></i>
                     Edit
                 </button>
             </form>
             <div class="or" data-text="or"></div>
-            <form method="post" action="/campGround/<%= campGround._id %>/?_m=DELETE">
+            <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
                 <button class=" ui right labeled icon red button">
                     <i class="trash icon"></i>
                     Delete
@@ -64,7 +64,7 @@
         <!-- <div class="row campground_details_row"> -->
         <div class="ui basic segment">
             <h4>Review</h4>
-            <form class="ui form review" method="post" action="/campground/<%=campGround._id%>/review">
+            <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
                 <!-- <div class="ui labeled ticked slider" name="rating" value=>
                 </div> -->
                 <div class="required field">

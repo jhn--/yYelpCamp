@@ -8,15 +8,9 @@ const ExpressError = require('./routes/utils/expressError');
 // express
 
 // morgan 
-let morgan = require('morgan');
+const morgan = require('morgan');
 app.use(morgan('dev'));
 // morgan 
-
-// joi
-const campgroundSchema = require('./joiSchemas/joi_campground');
-const reviewSchema = require('./joiSchemas/joi_review');
-// joi
-
 
 // mongoose
 const mongoose = require('mongoose');
@@ -46,47 +40,30 @@ app.set('view engine', 'ejs');
 // app.set('views', [process.cwd() + '/views/frontend', process.cwd() + '/views/backend'])
 app.set('views', path.join(__dirname, '/views/frontend'), path.join(__dirname, '/views/backend'))
 
-const validateCampground = (req, res, next) => {
-  // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(element => element["message"]).join(',');
-    throw new ExpressError(400, msg)
-  } else {
-    next()
-  }
-}
-
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(element => element["message"]).join(',');
-    throw new ExpressError(400, msg)
-  } else {
-    next()
-  }
-}
-
 const _port = 8888;
 app.listen(_port, () => {
     console.log(`yYelpCamp, listening on ${_port}`);
 })
 // express
 
-// const { _feIndex, _feTESTAddCamp, _fe404 } = require('./routes/frontend/app');
-const { _feIndex, _feListCampgrounds, _feShowCampground, _feNewCampground, _feEditCampground, _deleteCampground, _feNewReview, _fedeleteReview, _fe404 } = require('./routes/frontend/app');
-
 // frontend
+const _feIndex = (req, res) => {
+     res.render('index.ejs')
+}
+
+const _fe404 = (req, res, next) => {
+    // res.status(404).render('404.ejs')
+    next(new ExpressError(404, `Page not found.`))
+}
+
 app.get('/', _feIndex);
-app.get('/campgrounds', _feListCampgrounds)
-app.get('/campground/new', _feNewCampground)
-app.post('/campground/new', validateCampground, _feNewCampground)
-app.post('/campground/:id/review', validateReview, _feNewReview)
-app.delete('/campground/:campId/review/:reviewId', _fedeleteReview)
-app.get('/campground/:id', _feShowCampground)
-app.delete('/campground/:id', _deleteCampground)
-app.get('/campground/:id/edit', _feEditCampground)
-app.put('/campground/:id/edit', validateCampground, _feEditCampground)
+
+// express routes
+const campgroundsRoutes = require('./routes/frontend/campgrounds');
+app.use('/campgrounds', campgroundsRoutes);
+const reviewsRoutes = require('./routes/frontend/reviews');
+app.use('/campgrounds/:id/reviews', reviewsRoutes);
+// express routes
 
 // 404s
 app.all('*', _fe404);

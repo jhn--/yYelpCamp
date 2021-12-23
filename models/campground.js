@@ -33,7 +33,7 @@ const CampgroundSchema = new Schema({
 CampgroundSchema.post('findOneAndUpdate', async (doc) => {
     // query middleware
     // https://mongoosejs.com/docs/middleware.html
-    if(doc) {
+    if(doc.isDelete) {
         await review.updateMany(
             {
                 _id: {
