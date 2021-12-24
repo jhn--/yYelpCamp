@@ -17,3 +17,14 @@
     });
 </script>
 <% } %>
+
+<% if (error && error.length) { %>
+<script>
+    let msg = <%- JSON.stringify(error) %>;
+    $('body').toast({
+        class: 'error',
+        displayTime: 8000,
+        message: msg
+    });
+</script>
+<% } %>
