@@ -6,6 +6,10 @@ body {
   min-height: 100%;
 }
 
+/* div {
+  border:1px solid black;
+} */
+
 .main.container {
     min-height: 100%;
     margin-top: 5rem;

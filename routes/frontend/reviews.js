@@ -30,6 +30,8 @@ const _feNewReview = catchAsync(async (req, res) => {
             campGround.reviews.push(newReview);
             await campGround.save();
             await newReview.save();
+            const msg = 'Review posted!';
+            req.flash('success', msg);
             res.redirect(`/campgrounds/${id}`)
             break;
     }
@@ -44,6 +46,8 @@ const _fedeleteReview = async (req, res) => {
             // therefore, i do not need to delete review from CampGround.
             // deviates from the class 470. Deleting Reviews.
             await Review.findByIdAndUpdate(reviewId, { isDelete: true });
+            const msg = 'Review successfully deleted.';
+            req.flash('success', msg);
             res.redirect(`/campgrounds/${id}`);
             break;
     }

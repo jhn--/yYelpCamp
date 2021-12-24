@@ -1,0 +1,19 @@
+<!-- in case we want to use fomantic's message instead of toast. -->
+<!-- <div class="ui green message">
+    <i class="close icon"></i>
+    <div class="header">
+        Success
+    </div>
+    <p><%= success %></p>
+</div> -->
+
+<% if (success && success.length) { %>
+<script>
+    let msg = <%- JSON.stringify(success) %>;
+    $('body').toast({
+        class: 'success',
+        displayTime: 8000,
+        message: msg
+    });
+</script>
+<% } %>

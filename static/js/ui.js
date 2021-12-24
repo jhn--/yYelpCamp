@@ -30,10 +30,11 @@ $('.ui.form')
         }
     });
 
-// $('.ui.slider')
-//   .slider({
-//     min: 1,
-//     max: 5,
-//     start: 3,
-//     step: 1
+// in case we want to use fomantic's message instead of toast.
+// $('.message .close')
+//   .on('click', function() {
+//     $(this)
+//       .closest('.message')
+//       .transition('fade')
+//     ;
 //   });

@@ -38,6 +38,8 @@ const _feNewCampground = catchAsync(async (req, res) => {
             // }
             const newCampground = new Campground(req.body.campground);
             await newCampground.save();
+            const msg = 'Successfully made a new campground!'
+            req.flash('success', msg);
             res.redirect(`/campgrounds/${newCampground._id}`);
             break;
         default:
@@ -47,7 +49,9 @@ const _feNewCampground = catchAsync(async (req, res) => {
 
 const _deleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndUpdate(id, { isDelete: true }, {new: true});
+    await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
+    const msg = 'Camp successfully deleted.'
+    req.flash('success', msg);
     res.redirect('/campgrounds');
 })
 
@@ -56,7 +60,10 @@ const _feEditCampground = catchAsync(async (req, res) => {
     switch (req.method) {
         case "PUT":
             const editCampground = req.body.campground;
+            // console.log(editCampground[title]);
             await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+            const msg = 'Camp edited successfully!';
+            req.flash('success', msg);
             res.redirect(`/campgrounds/${id}`)
             break;
         default:

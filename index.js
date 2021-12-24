@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const ExpressError = require('./routes/utils/expressError');
 const session = require('express-session');
+const flash = require('connect-flash');
 // express
 
 // morgan 
@@ -51,7 +52,7 @@ const sessionConfig = {
   }
 }
 app.use(session(sessionConfig));
-
+app.use(flash());
 
 const _port = 8888;
 app.listen(_port, () => {
@@ -68,6 +69,13 @@ const _fe404 = (req, res, next) => {
     // res.status(404).render('404.ejs')
     next(new ExpressError(404, `Page not found.`))
 }
+
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash('success');
+  res.locals.error = req.flash('error');
+  next();
+})
 
 app.get('/', _feIndex);
 
