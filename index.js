@@ -9,6 +9,11 @@ const session = require('express-session');
 const flash = require('connect-flash');
 // express
 
+// passport
+const passport = require('passport');
+const passportLocalStrategy = require('passport-local');
+// passport
+
 // morgan 
 const morgan = require('morgan');
 app.use(morgan('dev'));
@@ -33,6 +38,7 @@ mongoose.connect(`mongodb://localhost:27017/${db_name}`, _mongoose_opts)
     })
 // mongoose
 
+// express
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -54,6 +60,13 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session()); // make sure session is used before passport.session()
+const User = require('./models/user');
+passport.use(new passportLocalStrategy(User.authenticate())); // User model doesn't have authenticate fn, it is added via passport (along with other functions, check docs!)
+passport.serializeUser(User.serializeUser()); // Generate a fn used by passport to serialize users into the session - store into session.
+passport.deserializeUser(User.deserializeUser()); // Generate a fn used by passport to deserialize users from(?) the session - get user out of that session.
+
 const _port = 8888;
 app.listen(_port, () => {
     console.log(`yYelpCamp, listening on ${_port}`);
@@ -69,7 +82,6 @@ const _fe404 = (req, res, next) => {
     // res.status(404).render('404.ejs')
     next(new ExpressError(404, `Page not found.`))
 }
-
 
 app.use((req, res, next) => {
   res.locals.success = req.flash('success');
