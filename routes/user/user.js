@@ -52,7 +52,7 @@ const _feLogin = catchAsync(async (req, res) => {
             const { username } = req.body;
             req.flash('success', `Welcome back, ${username}!`);
             const redirectBackTo = req.session.returnTo || '/campgrounds';
-            delete req.session.returnTo;
+            // delete req.session.returnTo;
             res.redirect(redirectBackTo);
             break;
         default:

@@ -69,21 +69,25 @@ passport.deserializeUser(User.deserializeUser()); // Generate a fn used by passp
 
 const _port = 8888;
 app.listen(_port, () => {
-    console.log(`yYelpCamp, listening on ${_port}`);
+  console.log(`yYelpCamp, listening on ${_port}`);
 })
 // express
 
 // frontend
 const _feIndex = (req, res) => {
-     res.render('index.ejs')
+  res.render('index.ejs')
 }
 
 const _fe404 = (req, res, next) => {
-    // res.status(404).render('404.ejs')
-    next(new ExpressError(404, `Page not found.`))
+  // res.status(404).render('404.ejs')
+  next(new ExpressError(404, `Page not found.`))
 }
 
 app.use((req, res, next) => {
+  if (!['/login', '/', '/register'].includes(req.originalUrl)) {
+    req.session.returnTo = req.originalUrl;
+  } // record the original URL unsigned user trying to go to into session.
+  console.log(req.session);
   res.locals.currentUser = req.user //514. currentUser Helper
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
