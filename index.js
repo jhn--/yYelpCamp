@@ -84,6 +84,7 @@ const _fe404 = (req, res, next) => {
 }
 
 app.use((req, res, next) => {
+  res.locals.currentUser = req.user //514. currentUser Helper
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
   next();

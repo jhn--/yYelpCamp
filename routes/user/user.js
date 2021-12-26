@@ -51,9 +51,16 @@ const _feLogin = catchAsync(async (req, res) => {
     }
 })
 
+const _feLogout = (async (req, res) => {
+    req.logout();
+    req.flash('success', `Successfully logged out.`);
+    res.redirect('/campgrounds');
+})
+
 router.get('/register', _feRegister);
 router.post('/register', validateUser, _feRegister);
 router.get('/login', _feLogin);
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), _feLogin);
+router.get('/logout', _feLogout);
 
 module.exports = router;

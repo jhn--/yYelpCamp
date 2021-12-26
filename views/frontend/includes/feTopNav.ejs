@@ -1,4 +1,4 @@
-<nav class="ui container">
+<nav class="ui inverted fixed top label menu">
     <a class="header active teal item" href="/">
         <i class="home icon"></i>
         yYelpCamp
@@ -7,16 +7,31 @@
         <i class="campground icon"></i>
         Camps
     </a>
-    <a class="item" href="/campgrounds/new">
-        <i class="wind icon"></i>
-        New Camp
-    </a>
-    <a class="item" href="/register">
-        <i class="mountain icon"></i>
-        Register
-    </a>
-    <a class="item" href="/login">
-        <i class="tree icon"></i>
-        Login
-    </a>
+    <% if (currentUser) { %>
+        <a class="item" href="/campgrounds/new">
+            <i class="wind icon"></i>
+            New Camp
+        </a>
+    <% } %>
+    <nav class="right menu">
+        <% if (!currentUser) { %>
+            <a class="item" href="/register">
+                <i class="mountain icon"></i>
+                Register
+            </a>
+            <a class="item" href="/login">
+                <i class="sign in alternate icon"></i>
+                Login
+            </a>
+        <% } else { %>
+            <a class="item"  href="">
+                <i class="heart outline icon"></i>
+                    <%= currentUser.username %>
+            </a>
+            <a class="item" href="/logout">
+                <i class="sign out alternate icon"></i>
+                Logout
+            </a>
+        <% } %>
+    </nav>
 </nav>

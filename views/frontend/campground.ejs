@@ -62,25 +62,27 @@
         </div>
         <div class="ui divider"></div>
         <!-- <div class="row campground_details_row"> -->
-        <div class="ui basic segment">
-            <h4>Review</h4>
-            <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
-                <!-- <div class="ui labeled ticked slider" name="rating" value=>
-                </div> -->
-                <div class="required field">
-                    <label>Price</label>
-                    <input type="range" min="1" max="5" value="3" name="review[rating]">
-                </div>
-                <div class="required field">
-                    <label>Description</label>
-                    <textarea name="review[body]" rows="5" autofocus></textarea>
-                </div>
-                <button class="circular ui icon button">
-                    <i class="icon pencil alternate"></i>
-                    Submit
-                </button>
-                <div class="ui error message"></div>
-            </form>
-        </div>
+        <% if (currentUser) { %>
+            <div class="ui basic segment">
+                <h4>Review</h4>
+                <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
+                    <!-- <div class="ui labeled ticked slider" name="rating" value=>
+                    </div> -->
+                    <div class="required field">
+                        <label>Price</label>
+                        <input type="range" min="1" max="5" value="3" name="review[rating]">
+                    </div>
+                    <div class="required field">
+                        <label>Description</label>
+                        <textarea name="review[body]" rows="5" autofocus></textarea>
+                    </div>
+                    <button class="circular ui icon button">
+                        <i class="icon pencil alternate"></i>
+                        Submit
+                    </button>
+                    <div class="ui error message"></div>
+                </form>
+            </div>
+        <% } %>
     </div>
 </section>
