@@ -26,8 +26,15 @@ const _feRegister = catchAsync( async (req, res) => {
                 const { email, username, password } = req.body.user;
                 const newUser = new User({ email, username });
                 const registeredUser = await User.register(newUser, password);
-                req.flash('success', `Welcome to yYelpCamp, ${registeredUser.username}!`);
-                res.redirect('/campgrounds');
+                req.login(registeredUser, err => {
+                    // after registration is successful, immediately login for user. :)
+                    if (err) {
+                        return next(err);
+                    } else {
+                        req.flash('success', `Welcome to yYelpCamp, ${registeredUser.username}!`);
+                        res.redirect('/campgrounds');
+                    }
+                })
                 break;
             } catch (err) {
                 req.flash('error', err.message);
