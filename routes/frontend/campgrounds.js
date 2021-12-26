@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
 const express = require('express');
 const router = express.Router();
+const isLoggedIn = require('../utils/middleware');
 
 // joi
 const campgroundSchema = require('../../joiSchemas/joi_campground');
@@ -88,11 +89,11 @@ const _feEditCampground = catchAsync(async (req, res) => {
 })
 
 router.get('/', _feListCampgrounds)
-router.get('/new', _feNewCampground)
-router.post('/new', validateCampground, _feNewCampground)
+router.get('/new', isLoggedIn, _feNewCampground)
+router.post('/new', isLoggedIn, validateCampground, _feNewCampground)
 router.get('/:id', _feShowCampground)
-router.delete('/:id', _feDeleteCampground)
-router.get('/:id/edit', _feEditCampground)
-router.put('/:id/edit', validateCampground, _feEditCampground)
+router.delete('/:id', isLoggedIn, _feDeleteCampground)
+router.get('/:id/edit', isLoggedIn, _feEditCampground)
+router.put('/:id/edit', isLoggedIn, validateCampground, _feEditCampground)
 
 module.exports = router;

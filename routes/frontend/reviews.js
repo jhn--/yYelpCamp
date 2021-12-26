@@ -3,7 +3,8 @@ const Review = require('../../models/review');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
 const express = require('express');
-const router = express.Router({mergeParams: true});
+const router = express.Router({ mergeParams: true });
+const isLoggedIn = require('../utils/middleware');
 
 // joi
 const reviewSchema = require('../../joiSchemas/joi_review');
@@ -53,7 +54,7 @@ const _fedeleteReview = async (req, res) => {
     }
 }
 
-router.post('/', validateReview, _feNewReview)
-router.delete('/:reviewId', _fedeleteReview)
+router.post('/', isLoggedIn, validateReview, _feNewReview)
+router.delete('/:reviewId', isLoggedIn, _fedeleteReview)
 
 module.exports = router;
