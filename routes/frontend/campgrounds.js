@@ -52,7 +52,7 @@ const _feNewCampground = catchAsync(async (req, res) => {
     }
 })
 
-const _deleteCampground = catchAsync(async (req, res) => {
+const _feDeleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
     const msg = 'Camp successfully deleted.'
@@ -91,7 +91,7 @@ router.get('/', _feListCampgrounds)
 router.get('/new', _feNewCampground)
 router.post('/new', validateCampground, _feNewCampground)
 router.get('/:id', _feShowCampground)
-router.delete('/:id', _deleteCampground)
+router.delete('/:id', _feDeleteCampground)
 router.get('/:id/edit', _feEditCampground)
 router.put('/:id/edit', validateCampground, _feEditCampground)
 

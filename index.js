@@ -92,6 +92,8 @@ app.use((req, res, next) => {
 app.get('/', _feIndex);
 
 // express routes
+const userRoutes = require('./routes/user/user');
+app.use('/', userRoutes);
 const campgroundsRoutes = require('./routes/frontend/campgrounds');
 app.use('/campgrounds', campgroundsRoutes);
 const reviewsRoutes = require('./routes/frontend/reviews');

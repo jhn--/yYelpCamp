@@ -1,0 +1,30 @@
+<% layout('./layouts/boilerplate') -%>
+<section class="ui basic segment">
+    <h1 class="ui header">Register</h1>
+</section>
+<div class="ui divider"></div>
+<section class="ui grid basic segment">
+    <div class="ui row">
+        <div class="ui basic segment ten wide column">
+            <form class="ui form register" method="post" action="/register">
+                <div class="required field">
+                    <label>E-Mail</label>
+                    <input type="text" name="user[email]" placeholder="E-Mail">
+                </div>
+                <div class="required field">
+                    <label>Username</label>
+                    <input type="text" name="user[username]" placeholder="Username">
+                </div>
+                <div class="required field">
+                    <label>Password</label>
+                    <input type="password" name="user[password]">
+                </div>
+                <button type="submit" class="ui submit labeled icon inverted green button">
+                    <i class="right arrow icon"></i>
+                    Submit
+                </button>
+                <div class="ui error message"></div>
+            </form>
+        </div>
+    </div>
+</section>
