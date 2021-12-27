@@ -1,25 +1,8 @@
 const Campground = require('../../models/campground');
-const User = require('../../models/user');
 const catchAsync = require('../utils/catchAsync');
-const ExpressError = require('../utils/expressError');
 const express = require('express');
 const router = express.Router();
-const isLoggedIn = require('../utils/middleware');
-
-// joi
-const campgroundSchema = require('../../joiSchemas/joi_campground');
-// joi
-
-const validateCampground = (req, res, next) => {
-  // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(element => element["message"]).join(',');
-    throw new ExpressError(400, msg)
-  } else {
-    next()
-  }
-}
+const {isLoggedIn, isAuthor, validateCampground} = require('../utils/middleware');
 
 const _feListCampgrounds = catchAsync(async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
@@ -58,16 +41,10 @@ const _feNewCampground = catchAsync(async (req, res) => {
 
 const _feDeleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campGround = await Campground.findById(id);
-    if (campGround.author.equals(req.user._id)) {
-        await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
-        const msg = 'Camp successfully deleted.'
-        req.flash('success', msg);
-        res.redirect('/campgrounds');
-    } else {
-        req.flash('error', 'You do not have permission to edit this camp.');
-        res.redirect(`/campgrounds/${id}`)
-    }
+    await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
+    const msg = 'Camp successfully deleted.'
+    req.flash('success', msg);
+    res.redirect('/campgrounds');
 })
 
 const _feEditCampground = catchAsync(async (req, res) => {
@@ -81,15 +58,10 @@ const _feEditCampground = catchAsync(async (req, res) => {
                 req.flash('error', msg)
                 res.redirect('/campgrounds');
             } else {
-                if (campGround.author.equals(req.user._id)) {
-                    await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
-                    const msg = 'Camp edited successfully!';
-                    req.flash('success', msg);
-                    res.redirect(`/campgrounds/${id}`)
-                } else {
-                    req.flash('error', 'You do not have permission to edit this camp.');
-                    res.redirect(`/campgrounds/${id}`)
-                }
+                await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+                const msg = 'Camp edited successfully!';
+                req.flash('success', msg);
+                res.redirect(`/campgrounds/${id}`)
             }
             break;
         default:
@@ -106,8 +78,8 @@ router.get('/', _feListCampgrounds)
 router.get('/new', isLoggedIn, _feNewCampground)
 router.post('/new', isLoggedIn, validateCampground, _feNewCampground)
 router.get('/:id', _feShowCampground)
-router.delete('/:id', isLoggedIn, _feDeleteCampground)
-router.get('/:id/edit', isLoggedIn, _feEditCampground)
-router.put('/:id/edit', isLoggedIn, validateCampground, _feEditCampground)
+router.delete('/:id', isLoggedIn, isAuthor, _feDeleteCampground)
+router.get('/:id/edit', isLoggedIn, isAuthor, _feEditCampground)
+router.put('/:id/edit', isLoggedIn, isAuthor, validateCampground, _feEditCampground)
 
 module.exports = router;
