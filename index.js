@@ -87,7 +87,7 @@ app.use((req, res, next) => {
   if (!['/login', '/', '/register'].includes(req.originalUrl)) {
     req.session.returnTo = req.originalUrl;
   } // record the original URL unsigned user trying to go to into session.
-  console.log(req.session);
+  // console.log(req.session);
   res.locals.currentUser = req.user //514. currentUser Helper
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');

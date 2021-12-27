@@ -46,22 +46,24 @@
             UST <%= campGround.price %>.00 per night
         </div>
         <div class="ui divider"></div>
-        <div class="row ui buttons campground_details_row">
-            <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
-                <button class="ui labeled icon orange button">
-                    <i class="pen nib icon"></i>
-                    Edit
-                </button>
-            </form>
-            <div class="or" data-text="or"></div>
-            <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
-                <button class=" ui right labeled icon red button">
-                    <i class="trash icon"></i>
-                    Delete
-                </button>
-            </form>
-        </div>
-        <div class="ui divider"></div>
+        <% if (currentUser && campGround.author.equals(currentUser)) { %> <!-- checks if user is logged in and if the logged in currentUser is the author -->
+            <div class="row ui buttons campground_details_row">
+                <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
+                    <button class="ui labeled icon orange button">
+                        <i class="pen nib icon"></i>
+                        Edit
+                    </button>
+                </form>
+                <div class="or" data-text="or"></div>
+                <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
+                    <button class=" ui right labeled icon red button">
+                        <i class="trash icon"></i>
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <div class="ui divider"></div>
+        <% } %>
         <!-- <div class="row campground_details_row"> -->
         <% if (currentUser) { %>
             <div class="ui basic segment">
