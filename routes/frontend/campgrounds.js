@@ -11,7 +11,17 @@ const _feListCampgrounds = catchAsync(async (req, res) => {
 
 const _feShowCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campGround = await Campground.findById(id).populate('reviews').populate('author');
+    // const campGround = await Campground.findById(id).populate('reviews').populate('author');
+    const campGround = await Campground.findById(id).populate( // important
+        {
+            path: 'reviews',
+            populate:
+            {
+                path: 'author'
+            }
+        }
+    ).populate('author');
+    // console.log(campGround);
     if (campGround.isDelete) {
         const msg = 'Cannot find that campground.';
         req.flash('error', msg)

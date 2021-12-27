@@ -27,6 +27,17 @@ const isAuthor = async (req, res, next) => {
     }
 }
 
+const isReviewAuthor = async (req, res, next) => {
+    const { id, reviewId } = req.params; // id = campground Id.
+    const review = await Review.findById(reviewId);
+    if (review.author.equals(req.user._id)) {
+        next();
+    } else {
+        req.flash('error', 'You do not have permission to delete this review.');
+        res.redirect(`/campgrounds/${id}`)
+    }
+}
+
 const validateCampground = (req, res, next) => {
   // console.log(campgroundSchema.validate(req.body)['error']['details'].map(element => element["message"]));
   const { error } = campgroundSchema.validate(req.body);
@@ -48,4 +59,4 @@ const validateReview = (req, res, next) => {
   }
 }
 
-module.exports = {isLoggedIn, isAuthor, validateCampground, validateReview};
+module.exports = {isLoggedIn, isAuthor, isReviewAuthor, validateCampground, validateReview};

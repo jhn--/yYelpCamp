@@ -78,7 +78,7 @@ const populateCampground = async () => {
             price: Math.floor(Math.random()*100),
             description: randDescription.generateSentences(5),
             location: `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`,
-            author: '61c98849d1ca6fc66536ec10',
+            author: '61c9ce3de5e5931323b60a83',
             reviews:[]
         })
         await randCamp.save();

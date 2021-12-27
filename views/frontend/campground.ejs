@@ -9,65 +9,9 @@
     <div class="eleven wide column">
         <img class="ui fluid image" src="<%= campGround.image %>" alt="">
         <div class="ui divider"></div>
-        <div class="row campground_details_row">
-            <h3>Reviews</h3>
-            <% campGround['reviews'].forEach(review => { %>
-            <% if (!review.isDelete) { %>
-            <div class="ui">
-                <div class="ui three column very relaxed grid ">
-                    <div class="column">
-                        <% for( let index = 0; index < review.rating; index++ ) { %>
-                        <i class="star outline yellow icon"></i>
-                        <% } %>
-                    </div>
-                    <div class="column">
-                        <%=review.body%>
-                    </div>
-                    <div class="column">
-                        <form action="/campgrounds/<%=campGround._id%>/reviews/<%=review._id%>?_m=DELETE" method="post">
-                            <button class="ui icon red button">
-                                <i class="trash icon"></i>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="ui divider"></div>
-            <% } %>
-            <% }) %>
-        </div>
-    </div>
-    <div class="five wide column">
-        <div class="row campground_details_row">
-            <%= campGround.description %>
-        </div>
-        <div class="ui divider"></div>
-        <div class="row campground_details_row">
-            UST <%= campGround.price %>.00 per night
-        </div>
-        <div class="ui divider"></div>
-        <% if (currentUser && campGround.author.equals(currentUser)) { %> <!-- checks if user is logged in and if the logged in currentUser is the author -->
-            <div class="row ui buttons campground_details_row">
-                <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
-                    <button class="ui labeled icon orange button">
-                        <i class="pen nib icon"></i>
-                        Edit
-                    </button>
-                </form>
-                <div class="or" data-text="or"></div>
-                <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
-                    <button class=" ui right labeled icon red button">
-                        <i class="trash icon"></i>
-                        Delete
-                    </button>
-                </form>
-            </div>
-            <div class="ui divider"></div>
-        <% } %>
-        <!-- <div class="row campground_details_row"> -->
         <% if (currentUser) { %>
             <div class="ui basic segment">
-                <h4>Review</h4>
+                <h3>Make a Review</h3>
                 <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
                     <!-- <div class="ui labeled ticked slider" name="rating" value=>
                     </div> -->
@@ -88,4 +32,69 @@
             </div>
         <% } %>
     </div>
+    <div class="five wide column">
+        <div class="row campground_details_row">
+            <%= campGround.description %>
+        </div>
+        <div class="ui divider"></div>
+        <div class="row campground_details_row">
+            UST <%= campGround.price %>.00 per night
+        </div>
+        <div class="ui divider"></div>
+        <% if (currentUser && campGround.author.equals(currentUser._id)) { %> <!-- checks if user is logged in and if the logged in currentUser is the author -->
+            <div class="row ui buttons campground_details_row">
+                <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
+                    <button class="ui labeled icon orange button">
+                        <i class="pen nib icon"></i>
+                        Edit
+                    </button>
+                </form>
+                <div class="or" data-text="or"></div>
+                <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
+                    <button class=" ui right labeled icon red button">
+                        <i class="trash icon"></i>
+                        Delete
+                    </button>
+                </form>
+            </div>
+            <div class="ui divider"></div>
+        <% } %>
+        <!-- <div class="row campground_details_row"> -->
+        <div class="row campground_details_row">
+            <h3>Reviews</h3>
+            <% campGround['reviews'].forEach(review => { %>
+            <% if (!review.isDelete) { %>
+            <div class="ui cards">
+                <div class="card">
+                    <div class="content">
+                        <div class="header">
+                            <% for( let index = 0; index < review.rating; index++ ) { %>
+                            <i class="star outline yellow icon"></i>
+                            <% } %>
+                        </div>
+                        <div class="description">
+                            <%=review.body%>
+                        </div>
+                        <div class="meta">
+                            <%=review.author.username%>
+                        </div>
+                    </div>
+                    <% if (currentUser && review.author.equals(currentUser._id)) { %>
+                    <form action="/campgrounds/<%=campGround._id%>/reviews/<%=review._id%>?_m=DELETE" method="post">
+                        <div class="ui bottom attached red button">
+                            <button class="ui icon red button">
+                                <i class="trash icon"></i>
+                                Delete Review
+                            </button>
+                        </div>
+                    </form>
+                    <% } %>
+                </div>
+            </div>
+            <!-- <div class="ui divider"></div> -->
+            <% } %>
+            <% }) %>
+        </div>
+    </div>
 </section>
+
