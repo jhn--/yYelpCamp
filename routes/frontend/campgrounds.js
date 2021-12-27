@@ -1,4 +1,5 @@
 const Campground = require('../../models/campground');
+const User = require('../../models/user');
 const catchAsync = require('../utils/catchAsync');
 const ExpressError = require('../utils/expressError');
 const express = require('express');
@@ -27,7 +28,7 @@ const _feListCampgrounds = catchAsync(async (req, res) => {
 
 const _feShowCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    const campGround = await Campground.findById(id).populate('reviews');
+    const campGround = await Campground.findById(id).populate('reviews').populate('author');
     if (campGround.isDelete) {
         const msg = 'Cannot find that campground.';
         req.flash('error', msg)
@@ -43,12 +44,14 @@ const _feNewCampground = catchAsync(async (req, res) => {
             //     throw new ExpressError(400, "Invalid Campground data.");
             // }
             const newCampground = new Campground(req.body.campground);
+            newCampground.author = req.user._id; // req.user._id - check 516.
             await newCampground.save();
             const msg = 'Successfully made a new campground!'
             req.flash('success', msg);
             res.redirect(`/campgrounds/${newCampground._id}`);
             break;
         default:
+            console.log(req.session.passport.user);
             res.render('newCampground.ejs');
     }
 })

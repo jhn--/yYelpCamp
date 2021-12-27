@@ -61,7 +61,7 @@ const cities = require('./cities');
 const { descriptors, places } = require('./seedHelpers');
 
 const populateCampground = async () => {
-    for (let i = 0; i < 50; i++) { // create 50 docs
+    for (let i = 0; i < 20; i++) { // create 20 docs
         const cityRand1000 = Math.floor(Math.random() * 1000); // pick 1 out of 1000 cities
         const randPicker = (arr) => {
             return arr[Math.floor(Math.random() * arr.length)]
@@ -78,6 +78,7 @@ const populateCampground = async () => {
             price: Math.floor(Math.random()*100),
             description: randDescription.generateSentences(5),
             location: `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`,
+            author: '61c98849d1ca6fc66536ec10',
             reviews:[]
         })
         await randCamp.save();

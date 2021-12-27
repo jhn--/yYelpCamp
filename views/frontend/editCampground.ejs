@@ -9,7 +9,7 @@
             <form class="ui form campground" method="post" action="/campgrounds/<%= campGround._id %>/edit?_m=PUT">
                 <div class="required field">
                     <label>Title</label>
-                    <input type="text" name="campground[title]" placeholder="Title" value="<%= campGround.title %>">
+                    <input type="text" name="campground[title]" placeholder="Title" value="<%= campGround.title %>" autofocus>
                 </div>
                 <div class="required field">
                     <label>Location</label>
