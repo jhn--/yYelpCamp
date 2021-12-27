@@ -8,6 +8,10 @@ const ReviewSchema = new Schema({
         type: Boolean,
         default: false
     },
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
 })
 
 module.exports = mongoose.model('Review', ReviewSchema);

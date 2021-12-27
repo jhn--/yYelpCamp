@@ -9,17 +9,18 @@ const _feNewReview = catchAsync(async (req, res) => {
   const { id } = req.params;
     switch (req.method) {
       case "POST":
-          // console.log(req.body.review);
-            const campGround = await Campground.findById(id); // find campground by id
-            const { rating, body } = req.body.review; // declare a review & populate w req.body.review
-            const newReview = new Review({ rating, body }); // before push
-            campGround.reviews.push(newReview);
-            await campGround.save();
-            await newReview.save();
-            const msg = 'Review posted!';
-            req.flash('success', msg);
-            res.redirect(`/campgrounds/${id}`)
-            break;
+        // console.log(req.body.review);
+        const campGround = await Campground.findById(id); // find campground by id
+        const { rating, body } = req.body.review; // declare a review & populate w req.body.review
+        const newReview = new Review({ rating, body }); // before push
+        newReview.author = req.user._id;
+        campGround.reviews.push(newReview);
+        await campGround.save();
+        await newReview.save();
+        const msg = 'Review posted!';
+        req.flash('success', msg);
+        res.redirect(`/campgrounds/${id}`)
+        break;
     }
 })
 
