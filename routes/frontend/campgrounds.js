@@ -58,10 +58,16 @@ const _feNewCampground = catchAsync(async (req, res) => {
 
 const _feDeleteCampground = catchAsync(async (req, res) => {
     const { id } = req.params;
-    await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
-    const msg = 'Camp successfully deleted.'
-    req.flash('success', msg);
-    res.redirect('/campgrounds');
+    const campGround = await Campground.findById(id);
+    if (campGround.author.equals(req.user._id)) {
+        await Campground.findByIdAndUpdate(id, { isDelete: true }, { new: true });
+        const msg = 'Camp successfully deleted.'
+        req.flash('success', msg);
+        res.redirect('/campgrounds');
+    } else {
+        req.flash('error', 'You do not have permission to edit this camp.');
+        res.redirect(`/campgrounds/${id}`)
+    }
 })
 
 const _feEditCampground = catchAsync(async (req, res) => {
@@ -75,10 +81,15 @@ const _feEditCampground = catchAsync(async (req, res) => {
                 req.flash('error', msg)
                 res.redirect('/campgrounds');
             } else {
-                await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
-                const msg = 'Camp edited successfully!';
-                req.flash('success', msg);
-                res.redirect(`/campgrounds/${id}`)
+                if (campGround.author.equals(req.user._id)) {
+                    await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+                    const msg = 'Camp edited successfully!';
+                    req.flash('success', msg);
+                    res.redirect(`/campgrounds/${id}`)
+                } else {
+                    req.flash('error', 'You do not have permission to edit this camp.');
+                    res.redirect(`/campgrounds/${id}`)
+                }
             }
             break;
         default:
