@@ -5,6 +5,7 @@ const ExpressError = require('../utils/expressError');
 // joi
 const campgroundSchema = require('../../joiSchemas/joi_campground');
 const reviewSchema = require('../../joiSchemas/joi_review');
+const userSchema = require('../../joiSchemas/joi_user');
 // joi
 
 const isLoggedIn = (req, res, next) => {
@@ -59,4 +60,14 @@ const validateReview = (req, res, next) => {
   }
 }
 
-module.exports = {isLoggedIn, isAuthor, isReviewAuthor, validateCampground, validateReview};
+const validateUser = (req, res, next) => {
+  const { error } = userSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map(element => element["message"]).join(',');
+    throw new ExpressError(400, msg)
+  } else {
+    next()
+  }
+}
+
+module.exports = {isLoggedIn, isAuthor, isReviewAuthor, validateCampground, validateReview, validateUser};

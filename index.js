@@ -84,10 +84,11 @@ const _fe404 = (req, res, next) => {
 }
 
 app.use((req, res, next) => {
-  if (!['/login', '/', '/register'].includes(req.originalUrl)) {
-    req.session.returnTo = req.originalUrl;
-  } // record the original URL unsigned user trying to go to into session.
-  // console.log(req.session);
+  // if (!['/login', '/register'].includes(req.originalUrl)) {
+  //   req.session.returnTo = req.originalUrl;
+  // } // record the original URL unsigned user trying to go to into session.
+  console.log(req.session);
+  console.log(req.originalUrl);
   res.locals.currentUser = req.user //514. currentUser Helper
   res.locals.success = req.flash('success');
   res.locals.error = req.flash('error');
@@ -97,7 +98,7 @@ app.use((req, res, next) => {
 app.get('/', _feIndex);
 
 // express routes
-const userRoutes = require('./routes/user/user');
+const userRoutes = require('./routes/frontend/users');
 app.use('/', userRoutes);
 const campgroundsRoutes = require('./routes/frontend/campgrounds');
 app.use('/campgrounds', campgroundsRoutes);

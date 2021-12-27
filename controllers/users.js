@@ -1,23 +1,5 @@
-const express = require('express');
-const router = express.Router();
-const catchAsync = require('../utils/catchAsync');
-const ExpressError = require('../utils/expressError');
-const User = require('../../models/user');
-const passport = require('passport');
-
-// joi
-const userSchema = require('../../joiSchemas/joi_user');
-// joi
-
-const validateUser = (req, res, next) => {
-  const { error } = userSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(element => element["message"]).join(',');
-    throw new ExpressError(400, msg)
-  } else {
-    next()
-  }
-}
+const User = require('../models/user');
+const catchAsync = require('../routes/utils/catchAsync');
 
 const _feRegister = catchAsync( async (req, res) => {
     switch (req.method) {
@@ -66,10 +48,8 @@ const _feLogout = (async (req, res) => {
     res.redirect('/campgrounds');
 })
 
-router.get('/register', _feRegister);
-router.post('/register', validateUser, _feRegister);
-router.get('/login', _feLogin);
-router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), _feLogin);
-router.get('/logout', _feLogout);
-
-module.exports = router;
+module.exports = {
+    _feRegister: _feRegister,
+    _feLogin: _feLogin,
+    _feLogout: _feLogout
+}
