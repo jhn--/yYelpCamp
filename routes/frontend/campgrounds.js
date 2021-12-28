@@ -14,13 +14,20 @@ const
         _feDeleteCampground,
         _feEditCampground 
     } = require('../../controllers/campgrounds');
+const multer = require('multer');
+const { storage } = require('../../cloudinary'); // don't need to explicitly define index, node automatically looks for index.js
+const upload = multer({ storage });
 
 
 router.get('/', _feListCampgrounds)
 
 router.route('/new') // fancy way
     .get(isLoggedIn, _feNewCampground)
-    .post(isLoggedIn, validateCampground, _feNewCampground)
+    // .post(isLoggedIn, validateCampground, _feNewCampground)
+    .post(upload.array('campground[image]'), (req, res) => {
+        console.log(req.body, req.files);
+        res.send("sending to cloudinary");
+    })
 // router.get('/new', isLoggedIn, _feNewCampground)
 // router.post('/new', isLoggedIn, validateCampground, _feNewCampground)
 

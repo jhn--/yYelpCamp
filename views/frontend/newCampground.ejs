@@ -6,7 +6,7 @@
 <section class="ui grid basic segment">
     <div class="ui row">
         <div class="ui basic segment ten wide column">
-            <form class="ui form campground" method="post" action="/campgrounds/new">
+            <form class="ui form campground" method="post" action="/campgrounds/new" enctype="multipart/form-data">
                 <div class="required field">
                     <label>Title</label>
                     <input type="text" name="campground[title]" placeholder="Title" autofocus>
@@ -16,9 +16,13 @@
                     <input type="text" name="campground[location]" placeholder="City, State">
                 </div>
                 <div class="required field">
+                    <label>Images</label>
+                    <input type="file" name="campground[image]" multiple>
+                </div>
+                <!-- <div class="required field">
                     <label>Image URL</label>
                     <input type="text" name="campground[image]" placeholder="Image URL">
-                </div>
+                </div> -->
                 <div class="required field">
                     <label>Price</label>
                     <div class="ui right labeled fluid input">

@@ -1,6 +1,11 @@
 if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
+  require('dotenv').config()
 }
+
+// console.log(process.env.NODE_ENV); // undefined, therefore not production
+// console.log(process.env.CLOUDINARY_CLOUD_NAME,
+// process.env.CLOUDINARY_KEY,
+// process.env.CLOUDINARY_SECRET)
 
 // express
 const express = require('express');
