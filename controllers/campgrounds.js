@@ -67,7 +67,10 @@ const _feEditCampground = catchAsync(async (req, res) => {
                 req.flash('error', msg)
                 res.redirect('/campgrounds');
             } else {
-                await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+                const newImgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+                const updatedCampground = await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+                updatedCampground.images.push(...newImgs); // use js spread syntax, newImgs is an array, we don't want to push an array into the campground.images array.
+                await updatedCampground.save();
                 const msg = 'Camp edited successfully!';
                 req.flash('success', msg);
                 res.redirect(`/campgrounds/${id}`)

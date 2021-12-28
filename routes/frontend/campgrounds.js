@@ -35,7 +35,7 @@ router.route('/:id')
 
 router.route('/:id/edit')
     .get(isLoggedIn, isAuthor, _feEditCampground)
-    .put(isLoggedIn, isAuthor, validateCampground, _feEditCampground)
+    .put(isLoggedIn, isAuthor, upload.array('campground[images]'), validateCampground, _feEditCampground)
 // router.get('/:id/edit', isLoggedIn, isAuthor, _feEditCampground)
 // router.put('/:id/edit', isLoggedIn, isAuthor, validateCampground, _feEditCampground)
 
