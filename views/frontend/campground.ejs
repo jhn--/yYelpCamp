@@ -7,7 +7,19 @@
 </section>
 <section class="ui very relaxed grid basic segment">
     <div class="eleven wide column">
-        <img class="ui fluid image" src="<%= campGround.image %>" alt="">
+        <div class="swiper campgroundSwiper">
+            <div class="swiper-wrapper">
+            <% campGround.images.forEach(image => { %>
+                <div class="swiper-slide">
+                    <img src="<%= image.url %>">
+                </div>
+            <% }) %>
+            </div>
+            <% if (campGround.images.length >1 ) { %>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            <% } %>
+        </div>
         <div class="ui divider"></div>
         <% if (currentUser) { %>
             <div class="ui basic segment">

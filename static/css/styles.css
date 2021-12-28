@@ -18,3 +18,46 @@ body {
 .campground_details_row {
   margin: 1em auto 1em;
 }
+
+/* swiper */
+.swiper {
+  width: 100%;
+  height: 50%;
+  /* height: 50rem; */
+}
+
+.swiper-slide {
+  /* text-align: center;
+  font-size: 18px;
+  background: #fff; */
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* https://stackoverflow.com/questions/45381871/swiper-how-to-customise-arrow-buttons */
+.swiper-button-next {
+  color: #fff !important; /* !important isn't necessary, just in case */
+}
+.swiper-button-prev {
+  color: #fff !important;
+}
+/* swiper */

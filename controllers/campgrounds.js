@@ -34,8 +34,10 @@ const _feNewCampground = catchAsync(async (req, res) => {
             //     throw new ExpressError(400, "Invalid Campground data.");
             // }
             const newCampground = new Campground(req.body.campground);
+            newCampground.images = req.files.map(f => ({ url: f.path, filename: f.filename })); // take out the path and file name from req.file and consolidate them into an object literal and assign it to newCampground.images.
             newCampground.author = req.user._id; // req.user._id - check 516.
             await newCampground.save();
+            console.log(newCampground);
             const msg = 'Successfully made a new campground!'
             req.flash('success', msg);
             res.redirect(`/campgrounds/${newCampground._id}`);

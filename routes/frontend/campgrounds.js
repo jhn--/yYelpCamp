@@ -23,11 +23,7 @@ router.get('/', _feListCampgrounds)
 
 router.route('/new') // fancy way
     .get(isLoggedIn, _feNewCampground)
-    // .post(isLoggedIn, validateCampground, _feNewCampground)
-    .post(upload.array('campground[image]'), (req, res) => {
-        console.log(req.body, req.files);
-        res.send("sending to cloudinary");
-    })
+    .post(isLoggedIn, upload.array('campground[images]'), validateCampground, _feNewCampground)
 // router.get('/new', isLoggedIn, _feNewCampground)
 // router.post('/new', isLoggedIn, validateCampground, _feNewCampground)
 

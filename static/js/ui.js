@@ -71,6 +71,12 @@ $('.ui.form.register')
         }
     });
 
+let swiper = new Swiper(".campgroundSwiper", {
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
 // in case we want to use fomantic's message instead of toast.
 // $('.message .close')
 //   .on('click', function() {

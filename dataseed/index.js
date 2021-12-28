@@ -61,7 +61,7 @@ const cities = require('./cities');
 const { descriptors, places } = require('./seedHelpers');
 
 const populateCampground = async () => {
-    for (let i = 0; i < 20; i++) { // create 20 docs
+    for (let i = 0; i < 10; i++) { // create 10 docs
         const cityRand1000 = Math.floor(Math.random() * 1000); // pick 1 out of 1000 cities
         const randPicker = (arr) => {
             return arr[Math.floor(Math.random() * arr.length)]
@@ -74,7 +74,15 @@ const populateCampground = async () => {
         });
         const randCamp = new Campground({
             title: `${randPicker(descriptors)} ${randPicker(places)} `,
-            image: 'https://source.unsplash.com/collection/483251',
+            images: [
+                {
+                url: 'https://res.cloudinary.com/jhnage/image/upload/v1640711858/yYelpCamp/gettyimages-482800571_high_fkzamh.jpg',
+                filename: 'gettyimages-482800571_high_fkzamh'
+                },
+                {
+                    url: 'https://res.cloudinary.com/jhnage/image/upload/v1640711858/yYelpCamp/gettyimages-632167255_super_py6i1l.jpg',
+                    filename: 'gettyimages-632167255_super_py6i1l'
+            }],
             price: Math.floor(Math.random()*100),
             description: randDescription.generateSentences(5),
             location: `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`,

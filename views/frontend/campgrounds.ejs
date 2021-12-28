@@ -13,7 +13,7 @@
         <% for( let cgs of campGrounds ) { %>
         <div class="ui card">
             <a class="image" href="/campgrounds/<%= cgs._id %>">
-                <img src="<%= cgs.image %>>">
+                <img src="<%= cgs.images[0].url %>">
             </a>
             <div class="content">
                 <a class="header" href="/campgrounds/<%= cgs._id %>">
