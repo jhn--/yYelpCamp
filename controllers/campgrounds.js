@@ -1,5 +1,6 @@
 const Campground = require('../models/campground');
 const catchAsync = require('../routes/utils/catchAsync');
+const {cloudinary} = require('../cloudinary');
 
 const _feListCampgrounds = catchAsync(async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
@@ -70,6 +71,29 @@ const _feEditCampground = catchAsync(async (req, res) => {
             } else {
                 const newImgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
                 const updatedCampground = await Campground.findByIdAndUpdate(id, editCampground, { new: true, runValidators: true });
+                // let's delete the images (if there are any) from mongodb first, before adding new images.
+                if (req.body.deleteImages) {
+                    await updatedCampground.updateOne({
+                        // find specific campground(updatedCampground)
+                        $pull: {
+                            // pull
+                            images: {
+                                // from images
+                                filename: {
+                                    // where filename
+                                    $in: req.body.deleteImages
+                                    // is in the req.body.deleteImages array
+                                }
+                            }
+                        }
+                    })
+                    // after removing images from mongodb, remove them from cloudinary
+                    // seems like a good idea because if the images in cloudinary are removed but
+                    // failed to remove from mongodb, then we'll be getting 404s.
+                    for (let filename of req.body.deleteImages) {
+                        await cloudinary.uploader.destroy(filename);
+                    }
+                }
                 updatedCampground.images.push(...newImgs); // use js spread syntax, newImgs is an array, we don't want to push an array into the campground.images array.
                 await updatedCampground.save();
                 const msg = 'Camp edited successfully!';
