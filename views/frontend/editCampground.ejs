@@ -18,14 +18,18 @@
                 </div>
                 <div class="field">
                     <label>Images</label>
+                    <label>Select to delete images</label>
+                    <div class="ui small images">
                     <% campGround.images.forEach((image, i) => { %>
-                        <div class="ui checkbox">
+                        <div class="ui checkbox thumbnail_checkbox">
                             <input type="checkbox" id="img-<%=i%>"" name="deleteImages[]" value="<%= image.filename %>">
                             <label for="img-<%=i%>">
-                                <img class="ui tiny image" src="<%= image.url %>">
+                                <img src="<%= image.thumbnail %>">
                             </label>
                         </div>
                     <% }) %>
+                    </div>
+                    <label>Or add new images</label>
                     <input type="file" name="campground[images]" multiple>
                 </div>
                 <div class="required field">
