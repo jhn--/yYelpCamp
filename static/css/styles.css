@@ -22,8 +22,8 @@ body {
 /* swiper */
 .swiper {
   width: 100%;
-  height: 50%;
-  /* height: 50rem; */
+  /* height: 50%; */
+  height: 50rem;
 }
 
 .swiper-slide {
