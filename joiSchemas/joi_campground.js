@@ -7,7 +7,8 @@ campground: Joi.object({
     // image: Joi.string().required(),
     price: Joi.number().required().min(1),
     description: Joi.string().required()
-    }).required()
+}).required(),
+    deleteImages: Joi.array()
 })
 
 module.exports = campgroundSchema;

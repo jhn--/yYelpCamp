@@ -61,6 +61,7 @@ const _feEditCampground = catchAsync(async (req, res) => {
     const campGround = await Campground.findById(id);
     switch (req.method) {
         case "PUT":
+            // console.log(req.body);
             const editCampground = req.body.campground;
             if (campGround.isDelete) {
                 const msg = 'Cannot find that campground.';

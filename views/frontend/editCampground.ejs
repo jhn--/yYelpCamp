@@ -16,8 +16,16 @@
                     <input type="text" name="campground[location]" placeholder="City, State"
                         value="<%= campGround.location %>">
                 </div>
-                <div class="required field">
+                <div class="field">
                     <label>Images</label>
+                    <% campGround.images.forEach((image, i) => { %>
+                        <div class="ui checkbox">
+                            <input type="checkbox" id="img-<%=i%>"" name="deleteImages[]" value="<%= image.filename %>">
+                            <label for="img-<%=i%>">
+                                <img class="ui tiny image" src="<%= image.url %>">
+                            </label>
+                        </div>
+                    <% }) %>
                     <input type="file" name="campground[images]" multiple>
                 </div>
                 <div class="required field">
