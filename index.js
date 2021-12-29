@@ -34,18 +34,24 @@ app.use(morgan("dev"));
 // mongoose
 const mongoose = require("mongoose");
 const mongoSanitize = require("express-mongo-sanitize");
-const db_name = "dev_yelpcamp";
+
 const _mongoose_opts = {
   //   autoIndex: false, // Don't build indexes
   maxPoolSize: 10, // Maintain up to 10 socket connections
   serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   family: 4, // Use IPv4, skip trying IPv6
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
+
+// const db_name = "dev_yelpcamp";
+// const dbUrl = `mongodb://localhost:27017/${db_name}`;
+const dbUrl = process.env.DB_URL;
 mongoose
-  .connect(`mongodb://localhost:27017/${db_name}`, _mongoose_opts)
+  .connect(dbUrl, _mongoose_opts)
   .then(() => {
-    console.log(`${db_name} connected`);
+    console.log(`DB connected`);
   })
   .catch((err) => {
     console.error(err);
@@ -65,9 +71,22 @@ app.set(
   path.join(__dirname, "/views/frontend"),
   path.join(__dirname, "/views/backend")
 );
+
+// store sessions in mongodb
+const MongoStore = require("connect-mongo"); // from const session = require("express-session");
+const secret = process.env.SECRET;
+const store = MongoStore.create({
+  mongoUrl: dbUrl,
+  touchAfter: 24 * 3600, // 24 hrs
+});
+
+store.on("error", function (e) {
+  console.log("session store error", e);
+});
 const sessionConfig = {
+  store: store,
   name: "yYC",
-  secret: "thisshouldnotbeherelmao",
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {
@@ -78,6 +97,8 @@ const sessionConfig = {
   },
 };
 app.use(session(sessionConfig));
+// store sessions in mongodb
+
 app.use(flash());
 
 app.use(mongoSanitize());

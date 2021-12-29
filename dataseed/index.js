@@ -16,18 +16,23 @@ const geocodingClient = mbxGeocoding({
 // mongoose
 const mongoose = require("mongoose");
 const Campground = require("../models/campground");
-const db_name = "dev_yelpcamp";
 const _mongoose_opts = {
   //   autoIndex: false, // Don't build indexes
   maxPoolSize: 10, // Maintain up to 10 socket connections
   serverSelectionTimeoutMS: 5000, // Keep trying to send operations for 5 seconds
   socketTimeoutMS: 45000, // Close sockets after 45 seconds of inactivity
   family: 4, // Use IPv4, skip trying IPv6
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 };
+
+// const db_name = "dev_yelpcamp";
+// const dbUrl = `mongodb://localhost:27017/${db_name}`;
+const dbUrl = process.env.DB_URL;
 mongoose
-  .connect(`mongodb://localhost:27017/${db_name}`)
+  .connect(dbUrl, _mongoose_opts)
   .then(() => {
-    console.log(`${db_name} connected`);
+    console.log(`DB connected`);
   })
   .catch((err) => {
     console.error(err);
