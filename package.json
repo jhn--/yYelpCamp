@@ -4,7 +4,8 @@
   "description": "code along of Colt's Udemy course - YelpCamp - will add my own stuff into the mix.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
