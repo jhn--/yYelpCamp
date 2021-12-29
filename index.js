@@ -62,6 +62,7 @@ app.set(
   path.join(__dirname, "/views/backend")
 );
 const sessionConfig = {
+  name: "yYC",
   secret: "thisshouldnotbeherelmao",
   resave: false,
   saveUninitialized: true,
@@ -69,6 +70,7 @@ const sessionConfig = {
     expires: Date.now() + 604800000, // 1 week = 604800000 milliseconds
     maxAge: 604800000,
     httpOnly: true,
+    // secure: true
   },
 };
 app.use(session(sessionConfig));
