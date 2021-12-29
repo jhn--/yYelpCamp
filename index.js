@@ -13,7 +13,6 @@ const app = express();
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
-const ExpressError = require("./routes/utils/expressError");
 const session = require("express-session");
 const flash = require("connect-flash");
 // express
@@ -30,6 +29,7 @@ app.use(morgan("dev"));
 
 // mongoose
 const mongoose = require("mongoose");
+const mongoSanitize = require("express-mongo-sanitize");
 const db_name = "dev_yelpcamp";
 const _mongoose_opts = {
   //   autoIndex: false, // Don't build indexes
@@ -73,6 +73,8 @@ const sessionConfig = {
 };
 app.use(session(sessionConfig));
 app.use(flash());
+
+app.use(mongoSanitize());
 
 app.use(passport.initialize());
 app.use(passport.session()); // make sure session is used before passport.session()
