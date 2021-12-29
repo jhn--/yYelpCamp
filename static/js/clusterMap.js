@@ -35,11 +35,11 @@ map.on("load", () => {
       "circle-color": [
         "step",
         ["get", "point_count"],
-        "#51bbd6",
-        100,
-        "#f1f075",
-        750,
-        "#f28cb1",
+        "#ffd166",
+        5,
+        "#06d6a0",
+        10,
+        "#118ab2",
       ],
       "circle-radius": ["step", ["get", "point_count"], 20, 100, 30, 750, 40],
     },
@@ -63,7 +63,7 @@ map.on("load", () => {
     source: "campgrounds",
     filter: ["!", ["has", "point_count"]],
     paint: {
-      "circle-color": "#11b4da",
+      "circle-color": "#ef476f",
       "circle-radius": 4,
       "circle-stroke-width": 1,
       "circle-stroke-color": "#fff",
@@ -114,6 +114,12 @@ map.on("load", () => {
     map.getCanvas().style.cursor = "pointer";
   });
   map.on("mouseleave", "clusters", () => {
+    map.getCanvas().style.cursor = "";
+  });
+  map.on("mouseenter", "unclustered-point", () => {
+    map.getCanvas().style.cursor = "pointer";
+  });
+  map.on("mouseleave", "unclustered-point", () => {
     map.getCanvas().style.cursor = "";
   });
 });
