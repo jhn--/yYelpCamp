@@ -3,6 +3,10 @@
     <h1 class="ui header">Campgrounds</h1>
 </section>
 <div class="ui divider"></div>
+<section class="ui inverted vertical masthead center aligned segment">
+    <!-- <div id="map" style="width: 100%; height: 500px"></div> -->
+    <div id="map" class="clustermap"></div>
+</section>
 <section class="ui basic segment">
     <!-- <ul>
         <% for( let cgs of campGrounds ) { %>
@@ -33,3 +37,10 @@
         <% } %>
     </div>
 </section>
+<script>
+    const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN %>';
+    const allCampgrounds = {
+        features: <%- JSON.stringify(campGrounds) %>
+        }
+</script>
+<script src="/js/clusterMap.js"></script>

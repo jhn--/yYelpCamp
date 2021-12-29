@@ -1,18 +1,15 @@
-<% layout('./layouts/boilerplate') -%>
-<section class="ui basic segment">
-    <!-- <div id="map" style="width: 100%; height: 500px"></div> -->
-    <div id="map" style="width: 100%; height: 40rem"></div>
+<% layout('./layouts/frontpage_boilerplate.ejs') -%>
+<section class="ui main container frontpage">
+    <h1 class="ui inverted header">
+        <i class="campground icon"></i> yYelpCamp
+    </h1>
+    <article class="ui center vertical aligned container">
+        <p>
+        A showcase of the best campgrounds this planet has to offer.
+</p><p>
+        Come on in, pick a spot and enjoy the moment. 
+        </p>
+        <p><i class="caravan icon"></i> <i class="mug hot icon"></i><i class="tree icon"></i><i class="campground icon"></i></p>
+    </article>
+
 </section>
-<div class="ui divider"></div>
-<section class="ui grid basic segment">
-    <div class="ui row">
-        front page
-    </div>
-</section>
-<script>
-    const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN %>';
-    const allCampgrounds = {
-        features: <%- JSON.stringify(campGrounds) %>
-        }
-</script>
-<script src="/js/clusterMap.js"></script>

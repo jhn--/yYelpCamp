@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <%- include('../../includes/head.ejs') %>
+    <%- include('../includes/styles.ejs') %>
+    <title>yYelpCamp</title>
+</head>
+    <section>
+        <%- include('../includes/feTopNav.ejs') %>
+    </section>
+    <section>
+        <%- include('../includes/alerts.ejs') %>
+    </section>
+<body class="frontpage-body">
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <%-body -%>
+    <footer class="ui inverted vertical footer padded segment">
+        <%- include("../includes/feFooter.ejs") %>
+    </footer>
+    <%- include('../../includes/script_src.ejs') %>
+</body>
+
+</html>
