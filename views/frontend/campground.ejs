@@ -130,6 +130,6 @@
 <script>
     const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN %>';
     const mapbox_coordinates = [<%- campGround.geometry.coordinates %>]; // need the [] brackets
-    const camptitle = '<%- campGround.title %>'
+    const camptitle = '<%- campGround.popUp %>'
 </script>
 <script src="/js/campgroundMap.js"></script>

@@ -1,70 +1,81 @@
-const mongoose = require('mongoose');
-const review = require('./review');
+const mongoose = require("mongoose");
+const review = require("./review");
 const Schema = mongoose.Schema;
 
-const ImageSchema = new Schema({
-    url: String,
-    filename: String
-})
+const opts = { toJSON: { virtuals: true } }; // need this to pass virtuals on frontpage.
 
-ImageSchema.virtual('thumbnail').get(function () {
-    return this.url.replace('/upload', '/upload/c_thumb,h_150,w_150');
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
 });
 
-const CampgroundSchema = new Schema({
+ImageSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/c_thumb,h_150,w_150");
+});
+
+const CampgroundSchema = new Schema(
+  {
     title: {
-        type: String
+      type: String,
     },
     images: [ImageSchema],
     price: {
-        type: Number
+      type: Number,
     },
     description: {
-        type: String
+      type: String,
     },
     location: {
-        type: String
+      type: String,
     },
-    geometry: { //geojson
-        type: {
-            type: String,
-            enum: ['Point'],
-            required: true
-        },
-        coordinates: {
-            type: [Number],
-            required: true
-        }
+    geometry: {
+      //geojson
+      type: {
+        type: String,
+        enum: ["Point"],
+        required: true,
+      },
+      coordinates: {
+        type: [Number],
+        required: true,
+      },
     },
     isDelete: {
-        type: Boolean,
-        default: false
+      type: Boolean,
+      default: false,
     },
     author: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+      type: Schema.Types.ObjectId,
+      ref: "User",
     },
     reviews: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Review'
-        }
-    ]
-})
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Review",
+      },
+    ],
+  },
+  opts
+);
 
-CampgroundSchema.post('findOneAndUpdate', async (doc) => {
-    // query middleware
-    // https://mongoosejs.com/docs/middleware.html
-    if(doc.isDelete) {
-        await review.updateMany(
-            {
-                _id: {
-                    $in: doc.reviews
-                }
-            }, {isDelete: true}, {new: true}
-        )
-    }
-})
+CampgroundSchema.virtual("properties.popUp").get(function () {
+  return `<a href="/campgrounds/${this._id}">${this.title}</a><br><img src="${this.images[0].thumbnail}">`;
+});
 
+CampgroundSchema.post("findOneAndUpdate", async (doc) => {
+  // query middleware
+  // https://mongoosejs.com/docs/middleware.html
+  if (doc.isDelete) {
+    await review.updateMany(
+      {
+        _id: {
+          $in: doc.reviews,
+        },
+      },
+      { isDelete: true },
+      { new: true }
+    );
+  }
+});
 
-module.exports = mongoose.model('Campground', CampgroundSchema);
+module.exports = mongoose.model("Campground", CampgroundSchema);
