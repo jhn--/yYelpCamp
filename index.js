@@ -114,7 +114,7 @@ passport.use(new passportLocalStrategy(User.authenticate())); // User model does
 passport.serializeUser(User.serializeUser()); // Generate a fn used by passport to serialize users into the session - store into session.
 passport.deserializeUser(User.deserializeUser()); // Generate a fn used by passport to deserialize users from(?) the session - get user out of that session.
 
-// const _port = 8888;
+// const port = 8888;
 const port = process.env.PORT; // process.env.PORT is being defined over @ heroku. knew abt it from the course.
 app.listen(port, () => {
   console.log(`yYelpCamp, listening on ${port}`);
