@@ -1,6 +1,7 @@
 <% layout('./layouts/boilerplate') -%>
 <section class="ui basic segment">
-    <h1 class="ui header">yYelpCamp</h1>
+    <!-- <div id="map" style="width: 100%; height: 500px"></div> -->
+    <div id="map" style="width: 100%; height: 40rem"></div>
 </section>
 <div class="ui divider"></div>
 <section class="ui grid basic segment">
@@ -8,3 +9,7 @@
         front page
     </div>
 </section>
+<script>
+    const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN %>';
+</script>
+<script src="/js/clusterMap.js"></script>
