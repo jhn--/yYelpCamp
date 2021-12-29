@@ -81,11 +81,10 @@ app.use(session(sessionConfig));
 app.use(flash());
 
 app.use(mongoSanitize());
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
+app.use(helmet());
+
+const helmetDirectives = require("./helmetDirectives");
+app.use(helmet.contentSecurityPolicy(helmetDirectives));
 
 app.use(passport.initialize());
 app.use(passport.session()); // make sure session is used before passport.session()
@@ -100,20 +99,10 @@ app.listen(_port, () => {
 });
 // express
 
-// // frontend
-// const _feIndex = (req, res) => {
-//   res.render('index.ejs')
-// }
-
-// const _fe404 = (req, res, next) => {
-//   // res.status(404).render('404.ejs')
-//   next(new ExpressError(404, `Page not found.`))
-// }
-
 app.use((req, res, next) => {
-  // if (!['/login', '/register'].includes(req.originalUrl)) {
-  //   req.session.returnTo = req.originalUrl;
-  // } // record the original URL unsigned user trying to go to into session.
+  if (!["/login", "/register"].includes(req.originalUrl)) {
+    req.session.returnTo = req.originalUrl;
+  } // record the original URL unsigned user trying to go to into session.
   // console.log(req.session);
   // console.log(req.originalUrl);
   res.locals.currentUser = req.user; //514. currentUser Helper
