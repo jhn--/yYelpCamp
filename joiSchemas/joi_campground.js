@@ -4,7 +4,8 @@ const Joi = BaseJoi.extend(extension);
 
 const campgroundSchema = Joi.object({
   campground: Joi.object({
-    title: Joi.string().required().escapeHTML(),
+    // title: Joi.string().required().escapeHTML(),
+    title: Joi.string().required(),
     location: Joi.string().required().escapeHTML(),
     // image: Joi.string().required(),
     price: Joi.number().required().min(1),
