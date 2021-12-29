@@ -2,7 +2,7 @@
 
 // const Joi = BaseJoi.extend(extension);
 
-const Joi = require("Joi");
+const Joi = require("joi");
 
 const reviewSchema = Joi.object({
   review: Joi.object({

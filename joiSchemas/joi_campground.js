@@ -2,7 +2,7 @@
 
 // const Joi = BaseJoi.extend(extension);
 
-const Joi = require("Joi");
+const Joi = require("joi");
 
 const campgroundSchema = Joi.object({
   campground: Joi.object({
