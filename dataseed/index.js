@@ -6,6 +6,9 @@
 // lorem ipsum
 const { LoremIpsum } = require('lorem-ipsum');
 
+// mapbox
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const geocodingClient = mbxGeocoding({ accessToken: 'pk.eyJ1IjoiLS0tamgiLCJhIjoiY2t4cXB0MHI5MWo3ZzJ2cDdibm90MHk0MSJ9.rfsiOHGkcnT0Pxj_N-Ecfw' });
 
 // mongoose
 const mongoose = require('mongoose');
@@ -72,6 +75,9 @@ const populateCampground = async () => {
                 min:4
             }
         });
+        const location = `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`;
+        const geoData = await geocodingClient.forwardGeocode({ query: location, limit: 1 }).send();
+        // console.log(location, geoData.body.features[0].geometry);
         const randCamp = new Campground({
             title: `${randPicker(descriptors)} ${randPicker(places)} `,
             images: [
@@ -85,8 +91,9 @@ const populateCampground = async () => {
             }],
             price: Math.floor(Math.random()*100),
             description: randDescription.generateSentences(5),
-            location: `${cities[cityRand1000]['city']}, ${cities[cityRand1000]['state']}`,
+            location: location,
             author: '61c9ce3de5e5931323b60a83',
+            geometry: geoData.body.features[0].geometry,
             reviews:[]
         })
         await randCamp.save();

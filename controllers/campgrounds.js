@@ -1,6 +1,8 @@
 const Campground = require('../models/campground');
 const catchAsync = require('../routes/utils/catchAsync');
-const {cloudinary} = require('../cloudinary');
+const { cloudinary } = require('../cloudinary');
+const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
+const geocodingClient = mbxGeocoding({ accessToken: process.env.MAPBOX_TOKEN });
 
 const _feListCampgrounds = catchAsync(async (req, res) => {
     const campGrounds = await Campground.find({ isDelete: false });
@@ -31,10 +33,12 @@ const _feShowCampground = catchAsync(async (req, res) => {
 const _feNewCampground = catchAsync(async (req, res) => {
     switch (req.method) {
         case "POST":
-            // if (!req.body.campground) {
-            //     throw new ExpressError(400, "Invalid Campground data.");
-            // }
+            const geoData = await geocodingClient.forwardGeocode({
+                query: req.body.campground.location,
+                limit: 1
+            }).send();
             const newCampground = new Campground(req.body.campground);
+            newCampground.geometry = geoData.body.features[0].geometry;
             newCampground.images = req.files.map(f => ({ url: f.path, filename: f.filename })); // take out the path and file name from req.file and consolidate them into an object literal and assign it to newCampground.images.
             newCampground.author = req.user._id; // req.user._id - check 516.
             await newCampground.save();

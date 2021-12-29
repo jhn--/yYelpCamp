@@ -1,122 +1,135 @@
 <% layout('./layouts/boilerplate') -%>
-<section class="ui basic segment">
+<section class="ui basic">
     <h1 class="ui header"><%= campGround.title %></h1>
     <div class="ui divider"></div>
     <h4 class="ui header"><%= campGround.location %></h4>
-    <h5 class="ui header">Submitted by: <%= campGround.author.username %></h5>
 </section>
-<section class="ui very relaxed grid basic segment">
-    <div class="eleven wide column">
-        <div class="swiper campgroundSwiper">
-            <div class="swiper-wrapper">
-            <% campGround.images.forEach(image => { %>
-                <div class="swiper-slide">
-                    <img src="<%= image.url %>">
+<div class="ui divider"></div>
+<section class="ui two column padded grid">
+    <div class="row">
+        <div class="ten wide column">
+            <div class="swiper campgroundSwiper">
+                <div class="swiper-wrapper">
+                <% campGround.images.forEach(image => { %>
+                    <div class="swiper-slide">
+                        <img src="<%= image.url %>">
+                    </div>
+                <% }) %>
                 </div>
-            <% }) %>
-            </div>
-            <% if (campGround.images.length >1 ) { %>
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            <% } %>
-        </div>
-        <div class="ui divider"></div>
-        <% if (currentUser) { %>
-            <div class="ui basic segment">
-                <h3>Make a Review</h3>
-                <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
-                    <div class="required field">
-                        <label>Rating</label>
-                        <fieldset class="starability-basic">
-                            <!-- <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." /> -->
-                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
-                            <label for="first-rate1" title="Terrible">1 star</label>
-                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
-                            <label for="first-rate2" title="Not good">2 stars</label>
-                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
-                            <label for="first-rate3" title="Average">3 stars</label>
-                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
-                            <label for="first-rate4" title="Very good">4 stars</label>
-                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
-                            <label for="first-rate5" title="Amazing">5 stars</label>
-                        </fieldset>
-                    </div>
-                    <div class="required field">
-                        <label>Description</label>
-                        <textarea name="review[body]" rows="5" autofocus></textarea>
-                    </div>
-                    <button class="circular ui icon button">
-                        <i class="icon pencil alternate"></i>
-                        Submit
-                    </button>
-                    <div class="ui error message"></div>
-                </form>
-            </div>
-        <% } %>
-    </div>
-    <div class="five wide column">
-        <div class="row campground_details_row">
-            <%= campGround.description %>
-        </div>
-        <div class="ui divider"></div>
-        <div class="row campground_details_row">
-            UST <%= campGround.price %>.00 per night
-        </div>
-        <div class="ui divider"></div>
-        <% if (currentUser && campGround.author.equals(currentUser._id)) { %> <!-- checks if user is logged in and if the logged in currentUser is the author -->
-            <div class="row ui buttons campground_details_row">
-                <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
-                    <button class="ui labeled icon orange button">
-                        <i class="pen nib icon"></i>
-                        Edit
-                    </button>
-                </form>
-                <div class="or" data-text="or"></div>
-                <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
-                    <button class=" ui right labeled icon red button">
-                        <i class="trash icon"></i>
-                        Delete
-                    </button>
-                </form>
+                <% if (campGround.images.length >1 ) { %>
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                <% } %>
             </div>
             <div class="ui divider"></div>
-        <% } %>
-        <!-- <div class="row campground_details_row"> -->
-        <div class="row campground_details_row">
-            <h3>Reviews</h3>
-            <% campGround['reviews'].forEach(review => { %>
-            <% if (!review.isDelete) { %>
-            <div class="ui cards">
-                <div class="card">
-                    <div class="content">
-                        <div class="header">
-                            <p class="starability-result" data-rating="<%= review.rating %>">
-                                Rated: <%= review.rating %> stars
-                            </p>
+                <div class="ui row">
+                    <% if (campGround['reviews'].length > 0) { %>
+                    <h3>Reviews</h3>
+                    <% campGround['reviews'].forEach(review => { %>
+                        <% if (!review.isDelete) { %>
+                        <div class="ui cards">
+                            <div class="ui fluid card">
+                                <div class="content">
+                                    <div class="header">
+                                        <p class="starability-result" data-rating="<%= review.rating %>">
+                                            Rated: <%= review.rating %> stars
+                                        </p>
+                                    </div>
+                                    <div class="description">
+                                        <%=review.body%>
+                                    </div>
+                                    <div class="meta">
+                                        <%=review.author.username%>
+                                    </div>
+                                </div>
+                                <% if (currentUser && review.author.equals(currentUser._id)) { %>
+                                <form action="/campgrounds/<%=campGround._id%>/reviews/<%=review._id%>?_m=DELETE" method="post">
+                                    <div class="ui bottom attached red button">
+                                        <button class="ui icon red button">
+                                            <i class="trash icon"></i>
+                                            Delete Review
+                                        </button>
+                                    </div>
+                                </form>
+                                <% } %>
+                            </div>
                         </div>
-                        <div class="description">
-                            <%=review.body%>
-                        </div>
-                        <div class="meta">
-                            <%=review.author.username%>
-                        </div>
-                    </div>
-                    <% if (currentUser && review.author.equals(currentUser._id)) { %>
-                    <form action="/campgrounds/<%=campGround._id%>/reviews/<%=review._id%>?_m=DELETE" method="post">
-                        <div class="ui bottom attached red button">
-                            <button class="ui icon red button">
-                                <i class="trash icon"></i>
-                                Delete Review
-                            </button>
-                        </div>
-                    </form>
-                    <% } %>
-                </div>
+                        <% } %>
+                    <% }) %>
+                <% } %>
             </div>
-            <!-- <div class="ui divider"></div> -->
+        </div>
+        <div class="six wide column">
+            <div class="row">
+                <%= campGround.description %>
+            </div>
+            <h5 class="ui header">Submitted by: <%= campGround.author.username %></h5>
+            <div class="ui divider"></div>
+            <div id="map" style='width: 100%; height: 35rem;'></div>
+            <div class="ui divider"></div>
+            <div class="ui row">
+                UST <%= campGround.price %>.00 per night
+            </div>
+            <div class="ui divider"></div>
+            <% if (currentUser && campGround.author.equals(currentUser._id)) { %> <!-- checks if user is logged in and if the logged in currentUser is the author -->
+                <div class="campground_buttons_div">
+                <div class="row ui buttons ">
+                    <form method="get" action="/campgrounds/<%= campGround._id %>/edit">
+                        <button class="ui labeled icon orange button">
+                            <i class="pen nib icon"></i>
+                            Edit
+                        </button>
+                    </form>
+                    <div class="or" data-text="or"></div>
+                    <form method="post" action="/campgrounds/<%= campGround._id %>/?_m=DELETE">
+                        <button class=" ui right labeled icon red button">
+                            <i class="trash icon"></i>
+                            Delete
+                        </button>
+                    </form>
+                </div>
+                </div>
+                <div class="ui divider"></div>
             <% } %>
-            <% }) %>
+            <% if (currentUser) { %>
+                <div class="ui row">
+                    <h3>Make a Review</h3>
+                    <form class="ui form review" method="post" action="/campgrounds/<%= campGround._id %>/reviews">
+                        <div class="required field">
+                            <label>Rating</label>
+                            <fieldset class="starability-basic">
+                                <!-- <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="0" checked aria-label="No rating." /> -->
+                                <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                                <label for="first-rate1" title="Terrible">1 star</label>
+                                <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                                <label for="first-rate2" title="Not good">2 stars</label>
+                                <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                                <label for="first-rate3" title="Average">3 stars</label>
+                                <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                                <label for="first-rate4" title="Very good">4 stars</label>
+                                <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                                <label for="first-rate5" title="Amazing">5 stars</label>
+                            </fieldset>
+                        </div>
+                        <div class="required field">
+                            <label>Description</label>
+                            <textarea name="review[body]" rows="5" autofocus></textarea>
+                        </div>
+                        <button class="circular ui icon button">
+                            <i class="icon pencil alternate"></i>
+                            Submit
+                        </button>
+                        <div class="ui error message"></div>
+                    </form>
+                </div>
+            <% } %>
         </div>
     </div>
 </section>
 
+<script>
+    const MAPBOX_TOKEN = '<%- process.env.MAPBOX_TOKEN %>';
+    const mapbox_coordinates = [<%- campGround.geometry.coordinates %>]; // need the [] brackets
+    const camptitle = '<%- campGround.title %>'
+</script>
+<script src="/js/campground_map.js"></script>

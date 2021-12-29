@@ -25,6 +25,17 @@ const CampgroundSchema = new Schema({
     location: {
         type: String
     },
+    geometry: { //geojson
+        type: {
+            type: String,
+            enum: ['Point'],
+            required: true
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        }
+    },
     isDelete: {
         type: Boolean,
         default: false
