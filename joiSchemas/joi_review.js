@@ -1,6 +1,8 @@
-const { BaseJoi, extension } = require("./joi_extensions");
+// const { BaseJoi, extension } = require("./joi_extensions");
 
-const Joi = BaseJoi.extend(extension);
+// const Joi = BaseJoi.extend(extension);
+
+const Joi = require("Joi");
 
 const reviewSchema = Joi.object({
   review: Joi.object({
