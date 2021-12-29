@@ -17,6 +17,10 @@ const session = require("express-session");
 const flash = require("connect-flash");
 // express
 
+// helmet
+const helmet = require("helmet");
+// helmet
+
 // passport
 const passport = require("passport");
 const passportLocalStrategy = require("passport-local");
@@ -77,6 +81,11 @@ app.use(session(sessionConfig));
 app.use(flash());
 
 app.use(mongoSanitize());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 app.use(passport.initialize());
 app.use(passport.session()); // make sure session is used before passport.session()
